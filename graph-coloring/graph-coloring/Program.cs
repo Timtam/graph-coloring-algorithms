@@ -16,12 +16,20 @@ namespace graph_coloring
         return;
       }
       file = args[0];
-      if(!File.Exists(file))
+      try
       {
-        Console.WriteLine("This file doesn't exist.");
-        return;
+        graph = RandomGraphGenerator.Generate(int.Parse(file));
       }
-      graph = DIMACSParser.Read(file);
+      catch(FormatException)
+      {
+        if(!File.Exists(file))
+        {
+          Console.WriteLine("This file doesn't exist.");
+          return;
+        }
+        graph = DIMACSParser.Read(file);
+      }
+      Console.WriteLine("Graph with " + graph.NodeCount + " nodes and " + graph.EdgeCount + " edges loaded successfully.");
     }
   }
 }
