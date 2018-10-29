@@ -36,6 +36,7 @@ namespace graph_coloring
       Console.WriteLine("Running local search on graph");
       LocalSearch s = new LocalSearch(graph);
       s.Run();
+      Console.WriteLine("Coloring through local search finished successfully.");
       Console.WriteLine("Finished with " + s.ColorCount + " colors needed");
     }
   }
