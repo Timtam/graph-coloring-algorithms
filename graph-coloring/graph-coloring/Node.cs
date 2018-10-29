@@ -4,11 +4,13 @@ namespace graph_coloring
 {
   public class Node
   {
+    private int color;
     private List<Node> neighbors;
     public readonly int ID;
 
     public Node()
     {
+      this.color = 0;
       this.neighbors = new List<Node>();
     }
 
@@ -34,6 +36,20 @@ namespace graph_coloring
       get
       {
         return this.neighbors.Count;
+      }
+    }
+
+    public int Color
+    {
+      get
+      {
+        return this.color;
+      }
+      set
+      {
+        if(value < 0)
+          value = 0;
+        this.color = value;
       }
     }
   }

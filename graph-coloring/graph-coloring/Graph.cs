@@ -36,7 +36,7 @@ namespace graph_coloring
         List<Tuple<int, int>> edges = new List<Tuple<int, int>>();
         Tuple<int, int> edge,redge;
 
-        for(i=0; i < this.NodeCount; i++)
+        for(i=0; i < this.graph.Count; i++)
         {
           for(j=0; j<this.graph[i].NeighborCount; j++)
           {
@@ -47,6 +47,36 @@ namespace graph_coloring
           }
         }
         return edges.Count;
+      }
+    }
+
+    public void Bleach()
+    {
+      int i;
+      for(i=0; i < this.graph.Count; i++)
+        this.graph[i].Color = 0;
+    }
+
+    public int ColorCount
+    {
+      get
+      {
+        List<int> colors = new List<int>(this.graph.Count);
+        int i,sum;
+        
+        for(i=0; i < this.graph.Count; i++)
+          colors.Add(0);
+        
+        for(i=0; i<this.graph.Count; i++)
+          if(this.graph[i].Color > 0)
+            colors[this.graph[i].Color - 1]++;
+        
+        sum = 0;
+        for(i=0; i<colors.Count; i++)
+          if(colors[i] > 0)
+            sum++;
+
+        return sum;
       }
     }
   }
