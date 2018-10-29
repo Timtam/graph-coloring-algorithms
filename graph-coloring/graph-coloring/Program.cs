@@ -1,4 +1,6 @@
-﻿using System;
+﻿using graph_coloring.algorithms;
+
+using System;
 using System.IO;
 
 namespace graph_coloring
@@ -30,6 +32,11 @@ namespace graph_coloring
         graph = DIMACSParser.Read(file);
       }
       Console.WriteLine("Graph with " + graph.NodeCount + " nodes and " + graph.EdgeCount + " edges loaded successfully.");
+
+      Console.WriteLine("Running local search on graph");
+      LocalSearch s = new LocalSearch(graph);
+      s.Run();
+      Console.WriteLine("Finished with " + s.ColorCount + " colors needed");
     }
   }
 }

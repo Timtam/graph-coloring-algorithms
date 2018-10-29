@@ -41,6 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="algorithms\Algorithm.cs" />
+    <Compile Include="algorithms\LocalSearch.cs" />
     <Compile Include="DIMACSParser.cs" />
     <Compile Include="Graph.cs" />
     <Compile Include="Node.cs" />

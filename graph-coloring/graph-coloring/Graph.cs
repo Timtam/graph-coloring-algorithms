@@ -50,34 +50,11 @@ namespace graph_coloring
       }
     }
 
-    public void Bleach()
+    public Node GetNode(int idx)
     {
-      int i;
-      for(i=0; i < this.graph.Count; i++)
-        this.graph[i].Color = 0;
-    }
-
-    public int ColorCount
-    {
-      get
-      {
-        List<int> colors = new List<int>(this.graph.Count);
-        int i,sum;
-        
-        for(i=0; i < this.graph.Count; i++)
-          colors.Add(0);
-        
-        for(i=0; i<this.graph.Count; i++)
-          if(this.graph[i].Color > 0)
-            colors[this.graph[i].Color - 1]++;
-        
-        sum = 0;
-        for(i=0; i<colors.Count; i++)
-          if(colors[i] > 0)
-            sum++;
-
-        return sum;
-      }
+      if(idx >= this.graph.Count)
+        throw new System.ArgumentOutOfRangeException("idx out of range", "idx");
+      return this.graph[idx];
     }
   }
 }
