@@ -36,5 +36,10 @@ namespace graph_coloring
         return this.neighbors.Count;
       }
     }
+
+    public override string ToString()
+    {
+      return "Node " + this.ID;
+    }
   }
 }
