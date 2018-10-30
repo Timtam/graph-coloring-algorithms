@@ -16,6 +16,8 @@ namespace graph_coloring.algorithms
       // bleaching all previous colorizations
       this.Bleach();
       
+      this.RunBefore();
+
       // looping over each node in the graph
       for(i=0; i < this.graph.NodeCount; i++)
       {
@@ -29,6 +31,7 @@ namespace graph_coloring.algorithms
         }
         while((n = this.GetBleachedNeighbor(n)) != null);
       }
+      this.RunAfter();
     }
 
     private Node GetBleachedNeighbor(Node n)

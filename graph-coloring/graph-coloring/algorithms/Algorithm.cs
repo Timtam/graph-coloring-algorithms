@@ -1,6 +1,8 @@
 ﻿using graph_coloring;
 
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace graph_coloring.algorithms
 {
@@ -8,6 +10,7 @@ namespace graph_coloring.algorithms
   {
     protected Graph graph;
     protected List<int> colors;
+    protected Stopwatch measurement;
 
     public Algorithm(Graph g)
     {
@@ -15,6 +18,7 @@ namespace graph_coloring.algorithms
 
       this.graph = g;
       this.colors = new List<int>(graph.NodeCount);
+      this.measurement = new Stopwatch();
 
       for(i=0; i<this.graph.NodeCount; i++)
         this.colors.Add(0);
@@ -47,6 +51,25 @@ namespace graph_coloring.algorithms
             sum++;
 
         return sum;
+      }
+    }
+
+    protected void RunBefore()
+    {
+      this.measurement.Reset();
+      this.measurement.Start();
+    }
+
+    protected void RunAfter()
+    {
+      this.measurement.Stop();
+    }
+
+    public TimeSpan Duration
+    {
+      get
+      {
+        return this.measurement.Elapsed;
       }
     }
   }

@@ -38,6 +38,7 @@ namespace graph_coloring
       s.Run();
       Console.WriteLine("Coloring through local search finished successfully.");
       Console.WriteLine("Finished with " + s.ColorCount + " colors needed");
+      Console.WriteLine("Algorithm took " + s.Duration + " to run.");
     }
   }
 }
