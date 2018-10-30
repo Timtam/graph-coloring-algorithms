@@ -1,5 +1,9 @@
 ﻿using graph_coloring;
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
 namespace graph_coloring.algorithms
 {
   public class LocalSearch : Algorithm
@@ -51,26 +55,29 @@ namespace graph_coloring.algorithms
 
     private int GetPossibleColor(Node n)
     {
-      bool found = false;
-      int color = 0;
+      List<int> colors = new List<int>(n.NeighborCount);
+      int color = 1;
       int i;
-      int tmp_color;
+      Node m;
       
-      while(!found)
+      for(i=0; i<n.NeighborCount; i++)
       {
-        found = true;
-        color++;
-        for(i=0; i < n.NeighborCount; i++)
-        {
-          tmp_color = this.colors[n.GetNeighbor(i).ID];
-          if(tmp_color > 0 && tmp_color == color)
-          {
-            found = false;
-            break;
-          }
-        }
+        m = n.GetNeighbor(i);
+        if(this.colors[m.ID] > 0)
+          colors.Add(this.colors[m.ID]);
       }
-      
+
+      colors = colors.Select(x => x).Distinct().ToList();
+
+      colors.Sort();
+
+      for(i=0; i<colors.Count; i++)
+      {
+        if(colors[i] != color)
+          break;
+        color++;
+      }
+
       return color;
     }
   }
