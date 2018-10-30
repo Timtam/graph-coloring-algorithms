@@ -1,4 +1,12 @@
-﻿using graph_coloring.algorithms;
+﻿// program entry point
+// program accepts the following parameters:
+//         file: either a file name to a DIMACS graph file
+//               or a number, in which case a random graph with that amount of
+//               nodes will be generated
+// local search will be applied to the given graph afterwards
+// and the result, as well as the running time will be printed
+
+using graph_coloring.algorithms;
 
 using System;
 using System.IO;

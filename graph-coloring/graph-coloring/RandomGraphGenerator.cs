@@ -1,4 +1,8 @@
-﻿using System;
+﻿// this class can generate a random graph with a given amount of nodes
+// it doesn't take care about connected graphs (yet)
+// it simply creates x nodes and randomly connects them
+
+using System;
 
 namespace graph_coloring
 {

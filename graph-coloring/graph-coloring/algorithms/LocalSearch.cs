@@ -1,4 +1,7 @@
-﻿using graph_coloring;
+﻿// local search implementation
+// derives Algorithm class
+
+using graph_coloring;
 
 using System;
 using System.Collections.Generic;
@@ -12,16 +15,16 @@ namespace graph_coloring.algorithms
     {
     }
 
+    // runs the local search algorithm on the given graph
     public void Run()
     {
       int i;
       Node n;
 
-      // bleaching all previous colorizations
-     
       this.RunBefore();
 
       // looping over each node in the graph
+      // secures against non-connected graphs
       for(i=0; i < this.graph.NodeCount; i++)
       {
         n = this.graph.GetNode(i);
@@ -37,6 +40,8 @@ namespace graph_coloring.algorithms
       this.RunAfter();
     }
 
+    // retrieves the next bleached neighbor from all of n's neighbors
+    // doesn't follow a specific logic, simply select the first one found
     private Node GetBleachedNeighbor(Node n)
     {
       int i;
@@ -52,6 +57,11 @@ namespace graph_coloring.algorithms
       return null;
     }
 
+    // checks all neighbors of n and returns the best color to use
+    // the best color is either the smallest color already used for this graph, 
+    // but not yet used for any neighbor, or a totally new color (if needed)
+    // we extract all colors used by neighbors
+    // distinct the list, sort it and loop until we find a valid color
     private int GetPossibleColor(Node n)
     {
       List<int> colors = new List<int>(n.NeighborCount);

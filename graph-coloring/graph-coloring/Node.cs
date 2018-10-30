@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿// a node class
+// has an ID and knows its neighbors
+
+using System.Collections.Generic;
 
 namespace graph_coloring
 {

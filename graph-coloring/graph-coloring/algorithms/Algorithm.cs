@@ -1,4 +1,10 @@
-﻿using graph_coloring;
+﻿// a base class for all future algorithms
+// provides general support for some tasks all algorithms need to perform the same way
+// thats storing the node colors and stopping the runtime for now
+// it also provides access to the required amount of colors (result)
+// all coloring algorithms need to derive this class
+
+using graph_coloring;
 
 using System;
 using System.Collections.Generic;

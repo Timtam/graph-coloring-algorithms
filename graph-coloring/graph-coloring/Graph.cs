@@ -1,4 +1,8 @@
-﻿using System;
+﻿// a graph class
+// has a certain amount of nodes (Node objects)
+// it can also add edges between nodes
+
+using System;
 using System.Collections.Generic;
 
 namespace graph_coloring

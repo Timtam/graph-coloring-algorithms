@@ -1,4 +1,11 @@
-﻿using System.IO;
+﻿// dimacsparser class
+// understands dimacs graph files and parses them
+// takes care of basic dimacs file errors
+// only edge problem files are supported right now
+// Read() method returns a fully loaded Graph object
+// may also raise exceptions if an error occurred
+
+using System.IO;
 
 namespace graph_coloring
 {
