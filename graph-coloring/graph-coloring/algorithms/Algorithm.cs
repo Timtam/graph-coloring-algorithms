@@ -56,6 +56,7 @@ namespace graph_coloring.algorithms
 
     protected void RunBefore()
     {
+      this.Bleach();
       this.measurement.Reset();
       this.measurement.Start();
     }

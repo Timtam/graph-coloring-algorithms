@@ -18,8 +18,7 @@ namespace graph_coloring.algorithms
       Node n;
 
       // bleaching all previous colorizations
-      this.Bleach();
-      
+     
       this.RunBefore();
 
       // looping over each node in the graph
