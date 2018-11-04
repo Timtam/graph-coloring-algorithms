@@ -31,7 +31,7 @@ namespace graph_coloring
           parts = line.Split(' ');
           if(parts.Length != 4)
             throw new System.ArgumentException("problem line doesn't have the required format");
-          if(parts[1] != "edge")
+          if(!parts[1].Contains("edge"))
             throw new System.ArgumentOutOfRangeException("only edge supported as problem format yet");
           g = new Graph(int.Parse(parts[2]));
         }
