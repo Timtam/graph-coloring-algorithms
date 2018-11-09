@@ -5,6 +5,7 @@
 // all coloring algorithms need to derive this class
 
 using graph_coloring;
+using graph_coloring.solutions;
 
 using System;
 using System.Collections.Generic;
@@ -37,29 +38,6 @@ namespace graph_coloring.algorithms
         this.colors[i] = 0;
     }
 
-    public int ColorCount
-    {
-      get
-      {
-        List<int> colors = new List<int>(this.colors.Count);
-        int i,sum;
-        
-        for(i=0; i < this.colors.Count; i++)
-          colors.Add(0);
-        
-        for(i=0; i<this.colors.Count; i++)
-          if(this.colors[i] > 0)
-            colors[this.colors[i] - 1]++;
-        
-        sum = 0;
-        for(i=0; i<colors.Count; i++)
-          if(colors[i] > 0)
-            sum++;
-
-        return sum;
-      }
-    }
-
     protected void RunBefore()
     {
       this.Bleach();
@@ -70,6 +48,11 @@ namespace graph_coloring.algorithms
     protected void RunAfter()
     {
       this.measurement.Stop();
+    }
+
+    public virtual Solution run()
+    {
+      return new Solution(null, null);
     }
 
     public TimeSpan Duration

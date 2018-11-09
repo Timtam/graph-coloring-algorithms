@@ -2,6 +2,7 @@
 // derives Algorithm class
 
 using graph_coloring;
+using graph_coloring.solutions;
 
 using System;
 using System.Collections.Generic;
@@ -9,14 +10,14 @@ using System.Linq;
 
 namespace graph_coloring.algorithms
 {
-  public class LocalSearch : Algorithm
+  public class LocalSearchAlgorithm : Algorithm
   {
-    public LocalSearch(Graph g) : base(g)
+    public LocalSearchAlgorithm(Graph g) : base(g)
     {
     }
 
     // runs the local search algorithm on the given graph
-    public void Run()
+    public Solution Run()
     {
       int i;
       Node n;
@@ -38,6 +39,7 @@ namespace graph_coloring.algorithms
         while((n = this.GetBleachedNeighbor(n)) != null);
       }
       this.RunAfter();
+      return new LocalSearchSolution(this.graph, this.colors);
     }
 
     // retrieves the next bleached neighbor from all of n's neighbors

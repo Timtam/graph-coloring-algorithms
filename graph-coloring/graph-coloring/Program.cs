@@ -7,6 +7,7 @@
 // and the result, as well as the running time will be printed
 
 using graph_coloring.algorithms;
+using graph_coloring.solutions;
 
 using System;
 using System.IO;
@@ -42,10 +43,10 @@ namespace graph_coloring
       Console.WriteLine("Graph with " + graph.NodeCount + " nodes and " + graph.EdgeCount + " edges loaded successfully.");
 
       Console.WriteLine("Running local search on graph");
-      LocalSearch s = new LocalSearch(graph);
-      s.Run();
+      LocalSearchAlgorithm s = new LocalSearchAlgorithm(graph);
+      Solution ss = s.Run();
       Console.WriteLine("Coloring through local search finished successfully.");
-      Console.WriteLine("Finished with " + s.ColorCount + " colors needed");
+      Console.WriteLine("Finished with " + ss.ColorCount + " colors needed");
       Console.WriteLine("Algorithm took " + s.Duration + " to run.");
     }
   }

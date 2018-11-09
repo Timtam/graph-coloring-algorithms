@@ -42,13 +42,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="algorithms\Algorithm.cs" />
-    <Compile Include="algorithms\LocalSearch.cs" />
+    <Compile Include="algorithms\LocalSearchAlgorithm.cs" />
     <Compile Include="DIMACSParser.cs" />
     <Compile Include="Graph.cs" />
     <Compile Include="Node.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RandomGraphGenerator.cs" />
+    <Compile Include="solutions\LocalSearchSolution.cs" />
+    <Compile Include="solutions\Solution.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
