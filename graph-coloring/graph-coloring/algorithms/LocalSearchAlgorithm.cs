@@ -42,28 +42,28 @@ namespace graph_coloring.algorithms
         }
         while((n = this.GetBleachedNeighbor(n)) != null);
       }
-      this.RunAfter();
 
       // we finished with that solution
       s = new LocalSearchSolution(this.graph, this.colors);
-      w = s.get_worth();
+      w = s.GetWorth();
 
       while(found)
       {
         found = false;
-        neighbors = s.get_neighbors();
+        neighbors = s.GetNeighbors();
         for(i=0; i < neighbors.Count; i++)
         {
           t = neighbors[i];
-          if(t.get_worth() < w)
+          if(t.GetWorth() < w)
           {
             s = t;
-            w = s.get_worth();
+            w = s.GetWorth();
             found = true;
             break;
           }
         }
       }
+      this.RunAfter();
 
       return s;
     }

@@ -11,7 +11,7 @@ namespace graph_coloring.solutions
     {
     }
 
-    public override List<Solution> get_neighbors()
+    public override List<Solution> GetNeighbors()
     {
       List<int> c;
       List<Solution> neighbors = new List<Solution>(this.graph.NodeCount);
@@ -28,7 +28,7 @@ namespace graph_coloring.solutions
       return neighbors;
     }
 
-    public override double get_worth()
+    public override double GetWorth()
     {
       double w = 0;
       int invalid_edges = 0;

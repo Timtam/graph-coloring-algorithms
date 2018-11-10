@@ -45,12 +45,12 @@ namespace graph_coloring.solutions
       }
     }
 
-    public virtual List<Solution> get_neighbors()
+    public virtual List<Solution> GetNeighbors()
     {
       return new List<Solution>();
     }
     
-    public virtual double get_worth()
+    public virtual double GetWorth()
     {
       return 0;
     }
@@ -70,7 +70,7 @@ namespace graph_coloring.solutions
       }
     }
 
-    public bool is_valid()
+    public bool IsValid()
     {
       int i,j;
       Node n,n2;
