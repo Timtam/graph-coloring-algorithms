@@ -22,7 +22,6 @@ namespace graph_coloring.solutions
       // calculating amount of different colors
       c = new List<int>(this.colors.Count);
 
-
       for(i=0; i < this.colors.Count; i++)
         c.Add(0);
         
@@ -30,14 +29,14 @@ namespace graph_coloring.solutions
         if(this.colors[i] > 0)
           c[this.colors[i] - 1]++;
         
-      sum = 0;
-      for(i=0; i<c.Count; i++)
-        if(c[i] > 0)
-          sum++;
+      sum = 1;
+      for(i=0; i<this.colors.Count; i++)
+        if(c[this.colors[i] - 1] > 0 && this.colors[i] > sum)
+          sum = this.colors[i];
 
       this.color_classes = new List<List<Node>>(sum);
       for(i=0; i < sum; i++)
-        this.color_classes.Add(new List<Node>(this.color_classes.Count / sum));
+        this.color_classes.Add(new List<Node>(this.graph.NodeCount / sum));
 
       for(i=0; i < this.graph.NodeCount; i++)
       {
@@ -51,7 +50,7 @@ namespace graph_coloring.solutions
       return new List<Solution>();
     }
     
-    public virtual float get_worth()
+    public virtual double get_worth()
     {
       return 0;
     }

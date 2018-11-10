@@ -20,7 +20,11 @@ namespace graph_coloring.algorithms
     public Solution Run()
     {
       int i;
+      List<Solution> neighbors;
       Node n;
+      Solution s,t;
+      double w;
+      bool found = true;
 
       this.RunBefore();
 
@@ -39,7 +43,29 @@ namespace graph_coloring.algorithms
         while((n = this.GetBleachedNeighbor(n)) != null);
       }
       this.RunAfter();
-      return new LocalSearchSolution(this.graph, this.colors);
+
+      // we finished with that solution
+      s = new LocalSearchSolution(this.graph, this.colors);
+      w = s.get_worth();
+
+      while(found)
+      {
+        found = false;
+        neighbors = s.get_neighbors();
+        for(i=0; i < neighbors.Count; i++)
+        {
+          t = neighbors[i];
+          if(t.get_worth() < w)
+          {
+            s = t;
+            w = s.get_worth();
+            found = true;
+            break;
+          }
+        }
+      }
+
+      return s;
     }
 
     // retrieves the next bleached neighbor from all of n's neighbors
