@@ -86,5 +86,19 @@ namespace graph_coloring.solutions
       }
       return true;
     }
+
+    protected int GetUnusedColor()
+    {
+      int i;
+      
+      for(i=0; i < this.colors.Count; i++)
+      {
+        if(i < this.color_classes.Count && this.color_classes[i].Count == 0)
+          return i + 1;
+        else if(i >= this.color_classes.Count)
+          break;
+      }
+      return i + 1;
+    }
   }
 }

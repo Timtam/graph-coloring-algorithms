@@ -13,16 +13,30 @@ namespace graph_coloring.solutions
 
     public override List<Solution> GetNeighbors()
     {
-      List<int> c;
-      List<Solution> neighbors = new List<Solution>(this.graph.NodeCount);
+      List<int> c, lc;
+      List<Solution> neighbors;
       int i;
-      Random r = new Random();
+      int n = new Random().Next(this.graph.NodeCount);
 
-      for(i=0; i < this.graph.NodeCount; i++)
+      //Console.WriteLine("picked node " + n);
+
+      c = new List<int>(this.color_classes.Count + 1);
+
+      for(i=0; i < this.color_classes.Count; i++)
       {
-        c = new List<int>(this.colors);
-        c[this.graph.GetNode(i).ID] = r.Next(1, this.ColorCount + 1);
-        neighbors.Add(new LocalSearchSolution(this.graph, c));
+        if(this.color_classes[i].Count > 0)
+          c.Add(i + 1);
+      }
+      c.Add(this.GetUnusedColor());
+
+      neighbors = new List<Solution>(c.Count);
+
+      for(i=0; i < c.Count; i++)
+      {
+        lc = new List<int>(this.colors);
+        //Console.WriteLine("set color of " + n + " to " + c[i]);
+        lc[this.graph.GetNode(n).ID] = c[i];
+        neighbors.Add(new LocalSearchSolution(this.graph, lc));
       }
 
       return neighbors;

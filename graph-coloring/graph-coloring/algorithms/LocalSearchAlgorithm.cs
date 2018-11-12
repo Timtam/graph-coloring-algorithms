@@ -16,17 +16,10 @@ namespace graph_coloring.algorithms
     {
     }
 
-    // runs the local search algorithm on the given graph
-    public Solution Run()
+    protected LocalSearchSolution GetGreedySolution()
     {
       int i;
-      List<Solution> neighbors;
       Node n;
-      Solution s,t;
-      double w;
-      bool found = true;
-
-      this.RunBefore();
 
       // looping over each node in the graph
       // secures against non-connected graphs
@@ -44,8 +37,24 @@ namespace graph_coloring.algorithms
       }
 
       // we finished with that solution
-      s = new LocalSearchSolution(this.graph, this.colors);
+      return new LocalSearchSolution(this.graph, this.colors);
+    }
+
+    // runs the local search algorithm on the given graph
+    public Solution Run()
+    {
+      int i;
+      List<Solution> neighbors;
+      Solution s,t;
+      double w;
+      bool found = true;
+
+      this.RunBefore();
+
+      s = this.GetGreedySolution();
       w = s.GetWorth();
+      neighbors = s.GetNeighbors();
+      s = neighbors[new Random().Next(neighbors.Count)];
 
       while(found)
       {
