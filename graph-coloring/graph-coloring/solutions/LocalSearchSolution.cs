@@ -17,14 +17,13 @@ namespace graph_coloring.solutions
       List<Solution> neighbors;
       int i;
       int n = new Random().Next(this.graph.NodeCount);
+      Node nn = this.graph.GetNode(n);
 
-      //Console.WriteLine("picked node " + n);
-
-      c = new List<int>(this.color_classes.Count + 1);
+      c = new List<int>(this.color_classes.Count);
 
       for(i=0; i < this.color_classes.Count; i++)
       {
-        if(this.color_classes[i].Count > 0)
+        if(this.color_classes[i].Count > 0 && (this.colors[nn.ID] + 1) != i)
           c.Add(i + 1);
       }
       c.Add(this.GetUnusedColor());
@@ -34,8 +33,7 @@ namespace graph_coloring.solutions
       for(i=0; i < c.Count; i++)
       {
         lc = new List<int>(this.colors);
-        //Console.WriteLine("set color of " + n + " to " + c[i]);
-        lc[this.graph.GetNode(n).ID] = c[i];
+        lc[nn.ID] = c[i];
         neighbors.Add(new LocalSearchSolution(this.graph, lc));
       }
 

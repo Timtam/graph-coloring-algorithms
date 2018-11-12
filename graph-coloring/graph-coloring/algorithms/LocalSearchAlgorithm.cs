@@ -52,19 +52,22 @@ namespace graph_coloring.algorithms
       this.RunBefore();
 
       s = this.GetGreedySolution();
-      w = s.GetWorth();
       neighbors = s.GetNeighbors();
+      //Console.WriteLine("neighbors found: " + neighbors.Count);
       s = neighbors[new Random().Next(neighbors.Count)];
+      w = s.GetWorth();
 
       while(found)
       {
         found = false;
         neighbors = s.GetNeighbors();
+        //Console.WriteLine("neighbors found: " + neighbors.Count);
         for(i=0; i < neighbors.Count; i++)
         {
           t = neighbors[i];
           if(t.GetWorth() < w)
           {
+            //Console.WriteLine("better result found");
             s = t;
             w = s.GetWorth();
             found = true;
