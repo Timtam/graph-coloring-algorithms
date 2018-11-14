@@ -56,6 +56,7 @@ namespace graph_coloring.algorithms
       //Console.WriteLine("neighbors found: " + neighbors.Count);
       s = neighbors[new Random().Next(neighbors.Count)];
       w = s.GetWorth();
+      //Console.WriteLine("initial w: " + w);
 
       while(found)
       {
@@ -65,6 +66,7 @@ namespace graph_coloring.algorithms
         for(i=0; i < neighbors.Count; i++)
         {
           t = neighbors[i];
+          //Console.WriteLine(t.GetWorth());
           if(t.GetWorth() < w)
           {
             //Console.WriteLine("better result found");
@@ -76,6 +78,7 @@ namespace graph_coloring.algorithms
         }
       }
       this.RunAfter();
+      //Console.WriteLine(s.IsValid());
 
       return s;
     }
