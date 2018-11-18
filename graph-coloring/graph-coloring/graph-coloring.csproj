@@ -50,6 +50,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RandomGraphGenerator.cs" />
+    <Compile Include="Randomizer.cs" />
     <Compile Include="solutions\LocalSearchSolution.cs" />
     <Compile Include="solutions\SimulatedAnnealingSolution.cs" />
     <Compile Include="solutions\Solution.cs" />

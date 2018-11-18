@@ -40,21 +40,32 @@ namespace graph_coloring.algorithms
       return new LocalSearchSolution(this.graph, this.colors);
     }
 
+    protected LocalSearchSolution GetSingleColoredSolution()
+    {
+      int i;
+      
+      for(i=0; i < this.graph.NodeCount; i++)
+        this.colors[i] = 1;
+
+      return new LocalSearchSolution(this.graph, this.colors);
+    }
+
     // runs the local search algorithm on the given graph
     public Solution Run()
     {
       int i;
       List<Solution> neighbors;
       Solution s,t;
-      double w;
+      double w, tmp_w;
       bool found = true;
 
       this.RunBefore();
 
-      s = this.GetGreedySolution();
+      s = this.GetSingleColoredSolution();
       neighbors = s.GetNeighbors();
       //Console.WriteLine("neighbors found: " + neighbors.Count);
-      s = neighbors[new Random().Next(neighbors.Count)];
+      s = neighbors[Randomizer.Next(neighbors.Count)];
+      //Console.WriteLine("calculating initial worth");
       w = s.GetWorth();
       //Console.WriteLine("initial w: " + w);
 
@@ -66,14 +77,15 @@ namespace graph_coloring.algorithms
         for(i=0; i < neighbors.Count; i++)
         {
           t = neighbors[i];
-          //Console.WriteLine(t.GetWorth());
-          if(t.GetWorth() < w)
+          //Console.WriteLine("calculating worth for neighbor " + i);
+          tmp_w = t.GetWorth();
+          //Console.WriteLine("worth: " + tmp_w);
+          if(tmp_w < w)
           {
             //Console.WriteLine("better result found");
             s = t;
-            w = s.GetWorth();
+            w = tmp_w;
             found = true;
-            break;
           }
         }
       }

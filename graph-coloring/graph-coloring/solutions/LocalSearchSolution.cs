@@ -16,7 +16,7 @@ namespace graph_coloring.solutions
       List<int> c, lc;
       List<Solution> neighbors;
       int i;
-      int n = new Random().Next(this.graph.NodeCount);
+      int n = Randomizer.Next(this.graph.NodeCount);
       Node nn = this.graph.GetNode(n);
 
       c = new List<int>(this.color_classes.Count);
@@ -66,7 +66,11 @@ namespace graph_coloring.solutions
         invalid_edges[i] /= 2;
       
       for(i=0; i < invalid_edges.Count; i++)
+      {
+        //Console.WriteLine("color classes for " + i + ": " + this.color_classes[i].Count);
+        //Console.WriteLine("invalid edges for " + i + ": " + invalid_edges[i]);
         w += (2*invalid_edges[i] - this.color_classes[i].Count) * this.color_classes[i].Count;
+      }
 
       return w;
     }

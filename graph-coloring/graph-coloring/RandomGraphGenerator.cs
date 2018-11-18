@@ -12,13 +12,12 @@ namespace graph_coloring
     {
       Graph g = new Graph(nodes);
       int i,j,r;
-      Random random = new Random();
       
       for(i=0; i<nodes; i++)
       {
         for(j=0; j<i; j++)
         {
-          r = random.Next(100);
+          r = Randomizer.Next(100);
           if(r >= 30)
             g.AddEdge(i, j);
         }
