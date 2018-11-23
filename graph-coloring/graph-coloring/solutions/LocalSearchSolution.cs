@@ -11,33 +11,34 @@ namespace graph_coloring.solutions
     {
     }
 
-    public override List<Solution> GetNeighbors()
+    public override IEnumerable<Solution> GetNextNeighbor()
     {
       List<int> c, lc;
-      List<Solution> neighbors;
-      int i;
-      int n = Randomizer.Next(this.graph.NodeCount);
-      Node nn = this.graph.GetNode(n);
+      int i,j;
+      Node n;
 
-      c = new List<int>(this.color_classes.Count);
-
-      for(i=0; i < this.color_classes.Count; i++)
+      for(i=0; i < this.graph.NodeCount; i++)
       {
-        if(this.color_classes[i].Count > 0 && (this.colors[nn.ID] + 1) != i)
-          c.Add(i + 1);
+
+        n = this.graph.GetNode(i);
+
+        c = new List<int>(this.color_classes.Count);
+
+        for(j=0; j < this.color_classes.Count; j++)
+        {
+          if(this.color_classes[j].Count > 0 && (this.colors[n.ID] + 1) != i)
+            c.Add(j + 1);
+        }
+        c.Add(this.GetUnusedColor());
+
+        for(j=0; j < c.Count; j++)
+        {
+          lc = new List<int>(this.colors);
+          lc[n.ID] = c[j];
+          yield return new LocalSearchSolution(this.graph, lc);
+        }
+
       }
-      c.Add(this.GetUnusedColor());
-
-      neighbors = new List<Solution>(c.Count);
-
-      for(i=0; i < c.Count; i++)
-      {
-        lc = new List<int>(this.colors);
-        lc[nn.ID] = c[i];
-        neighbors.Add(new LocalSearchSolution(this.graph, lc));
-      }
-
-      return neighbors;
     }
 
     public override double GetWorth()
@@ -67,8 +68,6 @@ namespace graph_coloring.solutions
       
       for(i=0; i < invalid_edges.Count; i++)
       {
-        //Console.WriteLine("color classes for " + i + ": " + this.color_classes[i].Count);
-        //Console.WriteLine("invalid edges for " + i + ": " + invalid_edges[i]);
         w += (2*invalid_edges[i] - this.color_classes[i].Count) * this.color_classes[i].Count;
       }
 

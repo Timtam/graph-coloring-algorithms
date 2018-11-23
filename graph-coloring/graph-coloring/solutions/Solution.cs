@@ -45,9 +45,9 @@ namespace graph_coloring.solutions
       }
     }
 
-    public virtual List<Solution> GetNeighbors()
+    public virtual IEnumerable<Solution> GetNextNeighbor()
     {
-      return new List<Solution>();
+      yield return new Solution(null, null);
     }
     
     public virtual double GetWorth()

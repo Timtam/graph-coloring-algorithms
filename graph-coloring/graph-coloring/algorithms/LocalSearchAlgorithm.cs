@@ -53,36 +53,23 @@ namespace graph_coloring.algorithms
     // runs the local search algorithm on the given graph
     public Solution Run()
     {
-      int i;
-      List<Solution> neighbors;
-      Solution s,t;
+      Solution s;
       double w, tmp_w;
       bool found = true;
 
       this.RunBefore();
 
-      s = this.GetSingleColoredSolution();
-      neighbors = s.GetNeighbors();
-      //Console.WriteLine("neighbors found: " + neighbors.Count);
-      s = neighbors[Randomizer.Next(neighbors.Count)];
-      //Console.WriteLine("calculating initial worth");
+      s = this.GetGreedySolution();
       w = s.GetWorth();
-      //Console.WriteLine("initial w: " + w);
 
       while(found)
       {
         found = false;
-        neighbors = s.GetNeighbors();
-        //Console.WriteLine("neighbors found: " + neighbors.Count);
-        for(i=0; i < neighbors.Count; i++)
+        foreach(Solution t in s.GetNextNeighbor())
         {
-          t = neighbors[i];
-          //Console.WriteLine("calculating worth for neighbor " + i);
           tmp_w = t.GetWorth();
-          //Console.WriteLine("worth: " + tmp_w);
           if(tmp_w < w)
           {
-            //Console.WriteLine("better result found");
             s = t;
             w = tmp_w;
             found = true;
@@ -90,7 +77,7 @@ namespace graph_coloring.algorithms
         }
       }
       this.RunAfter();
-      //Console.WriteLine(s.IsValid());
+      Console.WriteLine(s.IsValid());
 
       return s;
     }
