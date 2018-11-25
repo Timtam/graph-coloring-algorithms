@@ -9,7 +9,7 @@ namespace graph_coloring.solutions
 {
   public class SimulatedAnnealingSolution : LocalSearchSolution
   {
-    public SimulatedAnnealingSolution(Graph g, List<int> c) : base(g, c)
+    public SimulatedAnnealingSolution(Graph g, List<int> c, List<List<Node>> cc = null) : base(g, c, cc)
     {
     }
   }

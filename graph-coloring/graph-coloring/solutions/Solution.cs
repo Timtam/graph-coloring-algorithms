@@ -10,7 +10,8 @@ namespace graph_coloring.solutions
     protected Graph graph;
     protected List<int> colors;
     protected List<List<Node>> color_classes;
-    public Solution(Graph g, List<int> colors)
+
+    public Solution(Graph g, List<int> colors, List<List<Node>> color_classes = null)
     {
       List<int> c;
       int i,sum;
@@ -18,6 +19,10 @@ namespace graph_coloring.solutions
 
       this.graph = g;
       this.colors = colors;
+      this.color_classes = color_classes;
+
+      if(this.color_classes != null)
+        return;
 
       // calculating amount of different colors
       c = new List<int>(this.colors.Count);

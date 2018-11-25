@@ -77,7 +77,6 @@ namespace graph_coloring.algorithms
         }
       }
       this.RunAfter();
-      Console.WriteLine(s.IsValid());
 
       return s;
     }
