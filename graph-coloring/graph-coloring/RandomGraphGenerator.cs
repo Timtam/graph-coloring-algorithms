@@ -22,6 +22,7 @@ namespace graph_coloring
             g.AddEdge(i, j);
         }
       }
+
       return g;
     }
   }

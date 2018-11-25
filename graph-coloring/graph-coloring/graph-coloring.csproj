@@ -45,6 +45,7 @@
     <Compile Include="algorithms\LocalSearchAlgorithm.cs" />
     <Compile Include="algorithms\SimulatedAnnealingAlgorithm.cs" />
     <Compile Include="DIMACSParser.cs" />
+    <Compile Include="Edge.cs" />
     <Compile Include="Graph.cs" />
     <Compile Include="Node.cs" />
     <Compile Include="Program.cs" />

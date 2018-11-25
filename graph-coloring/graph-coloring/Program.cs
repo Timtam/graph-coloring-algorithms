@@ -49,7 +49,7 @@ namespace graph_coloring
       Console.WriteLine("Finished with " + ss.ColorCount + " colors needed");
       Console.WriteLine("Algorithm took " + s.Duration + " to run.");
       if(ss.IsValid() == true)
-        Console.WriteLine("Algorithm result is a feasable solution as well.");
+        Console.WriteLine("Algorithm result is a feasable solution.");
       else
       {
         Console.WriteLine("The algorithm result isn't a feasable solution and therefore");

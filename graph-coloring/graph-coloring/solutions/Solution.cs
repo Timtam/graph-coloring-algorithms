@@ -77,19 +77,11 @@ namespace graph_coloring.solutions
 
     public bool IsValid()
     {
-      int i,j;
-      Node n,n2;
-      for(i=0; i < this.graph.NodeCount; i++)
-      {
-        n = this.graph.GetNode(i);
-        for(j=0; j < n.NeighborCount; j++)
-        {
-          n2 = n.GetNeighbor(j);
-          if(this.colors[n.ID] == this.colors[n2.ID])
-            return false;
-        }
-      }
-      return true;
+      List<int> invalid = this.GetInvalidEdges();
+
+      invalid.Sort();
+
+      return invalid[invalid.Count - 1] == 0;
     }
 
     protected int GetUnusedColor()
@@ -104,6 +96,23 @@ namespace graph_coloring.solutions
           break;
       }
       return i + 1;
+    }
+
+    protected List<int> GetInvalidEdges()
+    {
+      List<int> edges = new List<int>(this.color_classes.Count);
+      int i;
+      
+      for(i=0; i < this.color_classes.Count; i++)
+        edges.Add(0);
+
+      for(i=0; i < this.graph.EdgeCount; i++)
+      {
+        if(this.colors[this.graph.Edges[i].A.ID] == this.colors[this.graph.Edges[i].B.ID])
+          edges[this.colors[this.graph.Edges[i].A.ID] - 1]++;
+      }
+
+      return edges;
     }
   }
 }

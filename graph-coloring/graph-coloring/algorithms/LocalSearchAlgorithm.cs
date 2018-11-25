@@ -73,6 +73,7 @@ namespace graph_coloring.algorithms
             s = t;
             w = tmp_w;
             found = true;
+            break;
           }
         }
       }
@@ -87,10 +88,11 @@ namespace graph_coloring.algorithms
     {
       int i;
       Node m;
+      List<Node> neighbors = this.graph.GetNeighbors(n);
       
       for(i=0; i < n.NeighborCount; i++)
       {
-        m = n.GetNeighbor(i);
+        m = neighbors[i];
         if(this.colors[m.ID] == 0)
           return m;
       }
@@ -109,10 +111,11 @@ namespace graph_coloring.algorithms
       int color = 1;
       int i;
       Node m;
+      List<Node> neighbors = this.graph.GetNeighbors(n);
       
       for(i=0; i<n.NeighborCount; i++)
       {
-        m = n.GetNeighbor(i);
+        m = neighbors[i];
         if(this.colors[m.ID] > 0)
           colors.Add(this.colors[m.ID]);
       }

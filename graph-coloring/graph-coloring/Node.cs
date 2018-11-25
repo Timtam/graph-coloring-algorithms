@@ -7,12 +7,12 @@ namespace graph_coloring
 {
   public class Node
   {
-    private List<Node> neighbors;
     public readonly int ID;
+    public int _neighbor_count;
 
     public Node()
     {
-      this.neighbors = new List<Node>();
+      this._neighbor_count = 0;
     }
 
     public Node(int id) : this()
@@ -20,29 +20,22 @@ namespace graph_coloring
       this.ID = id;
     }
 
-    public void AddNeighbor(Node n)
+    public override string ToString()
     {
-      this.neighbors.Add(n);
+      return "Node " + this.ID;
     }
 
-    public Node GetNeighbor(int idx)
+    public void IncrementNeighborCount()
     {
-      if(idx >= this.NeighborCount)
-        throw new System.ArgumentOutOfRangeException("index out of range", "idx");
-      return this.neighbors[idx];
+      this._neighbor_count++;
     }
 
     public int NeighborCount
     {
       get
       {
-        return this.neighbors.Count;
+        return this._neighbor_count;
       }
-    }
-
-    public override string ToString()
-    {
-      return "Node " + this.ID;
     }
   }
 }
