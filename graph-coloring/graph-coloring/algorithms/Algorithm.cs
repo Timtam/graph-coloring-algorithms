@@ -18,14 +18,18 @@ namespace graph_coloring.algorithms
     protected Graph graph;
     protected List<int> colors;
     protected Stopwatch measurement;
+    public readonly string Name;
+    private int timeout;
 
-    public Algorithm(Graph g)
+    public Algorithm(Graph g, string name = "unknown")
     {
       int i;
 
       this.graph = g;
       this.colors = new List<int>(graph.NodeCount);
       this.measurement = new Stopwatch();
+      this.Name = name;
+      this.timeout = -1;
 
       for(i=0; i<this.graph.NodeCount; i++)
         this.colors.Add(0);
@@ -50,7 +54,7 @@ namespace graph_coloring.algorithms
       this.measurement.Stop();
     }
 
-    public virtual Solution run()
+    public virtual Solution Run()
     {
       return new Solution(null, null);
     }
@@ -61,6 +65,16 @@ namespace graph_coloring.algorithms
       {
         return this.measurement.Elapsed;
       }
+    }
+
+    public int GetTimeout()
+    {
+      return this.timeout;
+    }
+
+    public virtual void SetTimeout(int t)
+    {
+      this.timeout = t;
     }
   }
 }

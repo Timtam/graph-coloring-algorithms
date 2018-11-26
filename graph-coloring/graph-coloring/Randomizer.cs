@@ -20,5 +20,10 @@ namespace graph_coloring
     {
       return random.Next(min, max);
     }
+
+    public static double NextDouble()
+    {
+      return random.NextDouble();
+    }
   }
 }

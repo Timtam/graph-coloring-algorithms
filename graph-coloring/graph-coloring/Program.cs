@@ -18,13 +18,50 @@ namespace graph_coloring
   {
     static void Main(string[] args)
     {
+      Algorithm s;
+      Solution ss;
       Graph graph;
+      int timeout = -1;;
+      string algorithm;
       string file;
-      if(args.Length != 1)
+      if(args.Length == 0)
       {
-        Console.WriteLine("The only parameter to this program may be the file");
-        Console.WriteLine("defining the graph which needs to be processed.");
+        Console.WriteLine("graph-coloring FILE ALGORITHM [TIMEOUT]");
+        Console.WriteLine("Parameters:");
+        Console.WriteLine("\tFILE - filename of a DIMACS graph file to process");
+        Console.WriteLine("\t       specify a number for a random graph");
+        Console.WriteLine("\t       with that amount of nodes");
+        Console.WriteLine("\tALGORITHM - algorithm to use during the search");
+        Console.WriteLine("\tTIMEOUT - milliseconds after which the program will finish");
+        Console.WriteLine("\t          processing some algorithms");
+        Console.WriteLine("");
+        Console.WriteLine("Currently supported algorithms:");
+        Console.WriteLine("\tlocal-search - local search");
+        Console.WriteLine("\tsimulated-annealing - simulated annealing");
         return;
+      }
+      else if(args.Length == 1)
+      {
+        Console.WriteLine("You must at least specify an algorithm to use");
+        return;
+      }
+
+      if(args.Length == 3)
+      {
+        try
+        {
+          timeout = int.Parse(args[2]);
+          if(timeout <= 0)
+          {
+            Console.WriteLine("You cannot disable timeouts.");
+            return;
+          }
+        }
+        catch (FormatException)
+        {
+          Console.WriteLine("timeout must be set with a numeric value.");
+          return;
+        }
       }
       file = args[0];
       try
@@ -42,10 +79,32 @@ namespace graph_coloring
       }
       Console.WriteLine("Graph with " + graph.NodeCount + " nodes and " + graph.EdgeCount + " edges loaded successfully.");
 
-      Console.WriteLine("Running local search on graph");
-      LocalSearchAlgorithm s = new LocalSearchAlgorithm(graph);
-      Solution ss = s.Run();
-      Console.WriteLine("Coloring through local search finished successfully.");
+      algorithm = args[1];
+
+      switch(algorithm)
+      {
+        case "local-search":
+          s = new LocalSearchAlgorithm(graph);
+          break;
+        case "simulated-annealing":
+          s = new SimulatedAnnealingAlgorithm(graph);
+          break;
+        default:
+          Console.WriteLine("no algorithm with name " + algorithm + " found");
+          return;
+      }
+
+      Console.WriteLine("Running " + s.Name + " on graph");
+      if(timeout >= 0)
+        s.SetTimeout(timeout);
+
+      timeout = s.GetTimeout();
+      if(timeout == -1)
+        Console.WriteLine("No timeout applied.");
+      else
+        Console.WriteLine("Timeout set to " + timeout + " milliseconds.");
+      ss = s.Run();
+      Console.WriteLine("Coloring through " + s.Name + " finished successfully.");
       Console.WriteLine("Finished with " + ss.ColorCount + " colors needed");
       Console.WriteLine("Algorithm took " + s.Duration + " to run.");
       if(ss.IsValid() == true)

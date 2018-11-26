@@ -12,7 +12,7 @@ namespace graph_coloring.algorithms
 {
   public class LocalSearchAlgorithm : Algorithm
   {
-    public LocalSearchAlgorithm(Graph g) : base(g)
+    public LocalSearchAlgorithm(Graph g, string name = "local search") : base(g, name)
     {
     }
 
@@ -51,7 +51,7 @@ namespace graph_coloring.algorithms
     }
 
     // runs the local search algorithm on the given graph
-    public Solution Run()
+    public override Solution Run()
     {
       Solution s;
       double w, tmp_w;
@@ -132,6 +132,11 @@ namespace graph_coloring.algorithms
       }
 
       return color;
+    }
+
+    public override void SetTimeout(int t)
+    {
+      return;
     }
   }
 }
