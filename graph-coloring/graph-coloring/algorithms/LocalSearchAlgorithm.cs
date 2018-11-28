@@ -16,7 +16,7 @@ namespace graph_coloring.algorithms
     {
     }
 
-    protected LocalSearchSolution GetGreedySolution()
+    protected T GetGreedySolution<T>()
     {
       int i;
       Node n;
@@ -37,17 +37,17 @@ namespace graph_coloring.algorithms
       }
 
       // we finished with that solution
-      return new LocalSearchSolution(this.graph, this.colors);
+      return (T)Activator.CreateInstance(typeof(T), this.graph, new List<int>(this.colors), null);
     }
 
-    protected LocalSearchSolution GetSingleColoredSolution()
+    protected T GetSingleColoredSolution<T>()
     {
       int i;
       
       for(i=0; i < this.graph.NodeCount; i++)
         this.colors[i] = 1;
 
-      return new LocalSearchSolution(this.graph, this.colors);
+      return (T)Activator.CreateInstance(typeof(T), this.graph, new List<int>(this.colors), null);
     }
 
     // runs the local search algorithm on the given graph
@@ -59,7 +59,7 @@ namespace graph_coloring.algorithms
 
       this.RunBefore();
 
-      s = this.GetGreedySolution();
+      s = this.GetGreedySolution<LocalSearchSolution>();
       w = s.GetWorth();
 
       while(found)

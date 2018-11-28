@@ -19,7 +19,7 @@ namespace graph_coloring.algorithms
     protected List<int> colors;
     protected Stopwatch measurement;
     public readonly string Name;
-    private int timeout;
+    protected int timeout;
 
     public Algorithm(Graph g, string name = "unknown")
     {

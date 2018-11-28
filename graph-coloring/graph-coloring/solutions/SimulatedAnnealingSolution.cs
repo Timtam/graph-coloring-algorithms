@@ -52,7 +52,7 @@ namespace graph_coloring.solutions
         if(processed[i].Count == c.Count)
           continue;
 
-        j = Randomizer.Next(c.Count);
+        j = c[Randomizer.Next(c.Count)];
 
         if(processed[i].IndexOf(j) >= 0)
           continue;
@@ -61,7 +61,7 @@ namespace graph_coloring.solutions
 
         lc = new List<int>(this.colors);
         ccl[lc[n.ID] - 1].Remove(n);
-        lc[n.ID] = c[j];
+        lc[n.ID] = j;
         ccl[lc[n.ID] - 1].Add(n);
         yield return new SimulatedAnnealingSolution(this.graph, lc, ccl);
         ccl[lc[n.ID] - 1].Remove(n);

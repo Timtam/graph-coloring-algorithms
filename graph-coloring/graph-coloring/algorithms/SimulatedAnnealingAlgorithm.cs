@@ -8,22 +8,27 @@ namespace graph_coloring.algorithms
 {
   public class SimulatedAnnealingAlgorithm : LocalSearchAlgorithm
   {
+    private int start_temperature;
+
     public SimulatedAnnealingAlgorithm(Graph g) : base(g, "simulated annealing")
     {
+      this.SetStartTemperature(30);
+      this.SetTimeout(120000);
     }
 
-    public Solution Run(int start_temp)
+    public override Solution Run()
     {
       bool found = true;
       int k = 0;
-      Solution s = this.GetGreedySolution();
+      Solution s = this.GetGreedySolution<SimulatedAnnealingSolution>();
+      Solution valid_s = s;
       double w = s.GetWorth();
       double tmp_w;
       double p;
       
       this.RunBefore();
 
-      while(found)
+      while(found && this.measurement.ElapsedMilliseconds < this.GetTimeout())
       {
         found = false;
         k++;
@@ -34,17 +39,21 @@ namespace graph_coloring.algorithms
           if(tmp_w < w)
           {
             s = t;
+            if(s.IsValid())
+              valid_s = s;
             w = tmp_w;
             found = true;
             break;
           }
           else if(tmp_w > w)
           {
-            p = Math.Exp((w - tmp_w) * Math.Log(k, 2) / start_temp);
+            p = Math.Exp((w - tmp_w) * Math.Log(k, 2) / this.start_temperature);
 
             if(Randomizer.NextDouble() < p)
             {
               s = t;
+              if(s.IsValid())
+                valid_s = s;
               w = tmp_w;
               found = true;
               break;
@@ -54,7 +63,22 @@ namespace graph_coloring.algorithms
       }
 
       this.RunAfter();
-      return s;
+      return valid_s;
+    }
+
+    public override void SetTimeout(int t)
+    {
+      this.timeout = t;
+    }
+
+    public int GetStartTemperature()
+    {
+      return this.start_temperature;
+    }
+
+    public void SetStartTemperature(int t)
+    {
+      this.start_temperature = t;
     }
   }
 }
