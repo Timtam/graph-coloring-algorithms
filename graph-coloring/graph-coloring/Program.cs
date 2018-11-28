@@ -36,8 +36,9 @@ namespace graph_coloring
         Console.WriteLine("\t          processing some algorithms");
         Console.WriteLine("");
         Console.WriteLine("Currently supported algorithms:");
-        Console.WriteLine("\tlocal-search - local search");
-        Console.WriteLine("\tsimulated-annealing - simulated annealing");
+        Console.WriteLine("\tlocal-search");
+        Console.WriteLine("\tsimulated-annealing");
+        Console.WriteLine("\ttaboo-search");
         return;
       }
       else if(args.Length == 1)
@@ -88,6 +89,9 @@ namespace graph_coloring
           break;
         case "simulated-annealing":
           s = new SimulatedAnnealingAlgorithm(graph);
+          break;
+        case "taboo-search":
+          s = new TabooSearchAlgorithm(graph);
           break;
         default:
           Console.WriteLine("no algorithm with name " + algorithm + " found");

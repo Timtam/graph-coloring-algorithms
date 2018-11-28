@@ -44,6 +44,7 @@
     <Compile Include="algorithms\Algorithm.cs" />
     <Compile Include="algorithms\LocalSearchAlgorithm.cs" />
     <Compile Include="algorithms\SimulatedAnnealingAlgorithm.cs" />
+    <Compile Include="algorithms\TabooSearchAlgorithm.cs" />
     <Compile Include="DIMACSParser.cs" />
     <Compile Include="Edge.cs" />
     <Compile Include="Graph.cs" />
@@ -55,6 +56,7 @@
     <Compile Include="solutions\LocalSearchSolution.cs" />
     <Compile Include="solutions\SimulatedAnnealingSolution.cs" />
     <Compile Include="solutions\Solution.cs" />
+    <Compile Include="solutions\TabooSearchSolution.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
