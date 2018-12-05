@@ -47,6 +47,7 @@
     <Compile Include="algorithms\TabooSearchAlgorithm.cs" />
     <Compile Include="DIMACSParser.cs" />
     <Compile Include="Edge.cs" />
+    <Compile Include="features\Feature.cs" />
     <Compile Include="Graph.cs" />
     <Compile Include="Node.cs" />
     <Compile Include="Program.cs" />
