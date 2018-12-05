@@ -10,9 +10,11 @@ namespace graph_coloring.solutions
   {
 
     private List<Feature> features;
+    public Feature Feature;
 
     public TabooSearchSolution(Graph g, List<int> c, List<List<Node>> cc = null) : base(g, c, cc)
     {
+      this.Feature = null;
     }
 
     public override IEnumerable<object> GetNextNeighbor()
@@ -21,12 +23,15 @@ namespace graph_coloring.solutions
       List<int> c;
       List<List<Node>> ccl;
       Feature min_f;
+      TabooSearchSolution s;
 
       min_f = this.features[0];
 
       for(i=1; i < this.features.Count; i++)
         if(this.features[i].Cost < min_f.Cost)
           min_f = features[i];
+
+      Console.WriteLine(min_f);
 
       c = new List<int>(this.colors);
       ccl = new List<List<Node>>(Math.Max(this.color_classes.Count, min_f.Color));
@@ -42,7 +47,9 @@ namespace graph_coloring.solutions
       c[min_f.Node.ID] = min_f.Color;
       ccl[this.colors[min_f.Node.ID] - 1].Remove(min_f.Node);
       ccl[min_f.Color - 1].Add(min_f.Node);
-      yield return new TabooSearchSolution(this.graph, c, ccl);
+      s = new TabooSearchSolution(this.graph, c, ccl);
+      s.Feature = min_f;
+      yield return s;
     } 
 
     public void SetFeatures(List<Feature> features)

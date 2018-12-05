@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 
 using graph_coloring;
 using graph_coloring.features;
@@ -16,7 +18,10 @@ namespace graph_coloring.algorithms
 
     public override Solution Run()
     {
+      ConcurrentQueue<Feature> taboo;
+      Feature drop;
       int i,j;
+      int stored_features;
       List<Feature> features = new List<Feature>(this.graph.NodeCount * this.graph.NodeCount);
       Node n;
       TabooSearchSolution s;
@@ -34,6 +39,11 @@ namespace graph_coloring.algorithms
         }
       }
 
+      // calculate amount of stored features
+      stored_features = this.graph.NodeCount / 5;
+
+      taboo = new ConcurrentQueue<Feature>();
+
       // get the initial solution
       s = this.GetGreedySolution<TabooSearchSolution>();
       w = s.GetWorth();
@@ -50,11 +60,16 @@ namespace graph_coloring.algorithms
         var enumerator = s.GetNextNeighbor().GetEnumerator();
         enumerator.MoveNext();
         s = (TabooSearchSolution)enumerator.Current;
-        s.SetFeatures(features);
+        taboo.Enqueue(s.Feature);
+        if(taboo.Count > stored_features)
+          taboo.TryDequeue(out drop);
+        s.SetFeatures(features.Where(f => !taboo.Contains(f)).ToList());
         if(s.IsValid() && (w = s.GetWorth()) < global_w)
         {
           global_s = s;
           global_w = w;
+          while(taboo.Count < 0)
+            taboo.TryDequeue(out drop);
         }
       }
 
