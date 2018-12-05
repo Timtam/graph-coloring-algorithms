@@ -11,7 +11,7 @@ namespace graph_coloring.solutions
     {
     }
 
-    public override IEnumerable<Solution> GetNextNeighbor()
+    public override IEnumerable<object> GetNextNeighbor()
     {
       List<List<Node>> ccl;
       List<int> c, lc;

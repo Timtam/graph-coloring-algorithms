@@ -15,7 +15,7 @@ namespace graph_coloring.solutions
     {
     }
 
-    public override IEnumerable<Solution> GetNextNeighbor()
+    public override IEnumerable<object> GetNextNeighbor()
     {
       int i;
       List<int> c;
@@ -29,11 +29,14 @@ namespace graph_coloring.solutions
           min_f = features[i];
 
       c = new List<int>(this.colors);
-      ccl = new List<List<Node>>(this.color_classes.Count);
+      ccl = new List<List<Node>>(Math.Max(this.color_classes.Count, min_f.Color));
 
-      for(i=0; i < this.color_classes.Count; i++)
+      for(i=0; i < Math.Max(this.color_classes.Count, min_f.Color); i++)
       {
-        ccl.Add(new List<Node>(this.color_classes[i]));
+        if(i < this.color_classes.Count)
+          ccl.Add(new List<Node>(this.color_classes[i]));
+        else
+          ccl.Add(new List<Node>(this.graph.NodeCount));
       }
 
       c[min_f.Node.ID] = min_f.Color;
@@ -47,14 +50,17 @@ namespace graph_coloring.solutions
       // copying the current state
       int i;
       List<int> c = new List<int>(this.colors);
-      List<List<Node>> ccl = new List<List<Node>>(this.color_classes.Count);
+      List<List<Node>> ccl = new List<List<Node>>(this.graph.NodeCount);
       TabooSearchSolution s;
 
       this.features = features;
 
-      for(i=0; i < this.color_classes.Count; i++)
+      for(i=0; i < this.graph.NodeCount; i++)
       {
-        ccl.Add(new List<Node>(this.color_classes[i]));
+        if(i < this.color_classes.Count)
+          ccl.Add(new List<Node>(this.color_classes[i]));
+        else
+          ccl.Add(new List<Node>(this.graph.NodeCount));
       }
 
       for(i=0; i < features.Count; i++)

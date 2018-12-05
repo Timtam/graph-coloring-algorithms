@@ -50,7 +50,7 @@ namespace graph_coloring.solutions
       }
     }
 
-    public virtual IEnumerable<Solution> GetNextNeighbor()
+    public virtual IEnumerable<object> GetNextNeighbor()
     {
       yield return new Solution(null, null);
     }

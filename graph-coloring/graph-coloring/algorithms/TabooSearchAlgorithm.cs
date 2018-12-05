@@ -11,6 +11,7 @@ namespace graph_coloring.algorithms
   {
     public TabooSearchAlgorithm(Graph g) : base(g, "taboo search")
     {
+      this.SetTimeout(120000);
     }
 
     public override Solution Run()
@@ -39,10 +40,32 @@ namespace graph_coloring.algorithms
       global_s = s;
       global_w = w;
 
+      this.RunBefore();
+
       // calculating feature cost for first solution
       s.SetFeatures(features);
 
-      return s;
+      while(this.measurement.ElapsedMilliseconds < this.timeout)
+      {
+        var enumerator = s.GetNextNeighbor().GetEnumerator();
+        enumerator.MoveNext();
+        s = (TabooSearchSolution)enumerator.Current;
+        s.SetFeatures(features);
+        if(s.IsValid() && (w = s.GetWorth()) < global_w)
+        {
+          global_s = s;
+          global_w = w;
+        }
+      }
+
+      this.RunAfter();
+
+      return global_s;
+    }
+
+    public override void SetTimeout(int t)
+    {
+      this.timeout = t;
     }
   }
 }
