@@ -8,17 +8,54 @@ namespace graph_coloring.solutions
 {
   public class TabooSearchSolution : LocalSearchSolution
   {
+
+    private List<Feature> features;
+
     public TabooSearchSolution(Graph g, List<int> c, List<List<Node>> cc = null) : base(g, c, cc)
     {
     }
 
-    public void CalculateFeatureCosts(List<Feature> features)
+    public override IEnumerable<Solution> GetNextNeighbor()
+    {
+      int i;
+      List<int> c;
+      List<List<Node>> ccl;
+      Feature min_f;
+
+      min_f = this.features[0];
+
+      for(i=1; i < this.features.Count; i++)
+        if(this.features[i].Cost < min_f.Cost)
+          min_f = features[i];
+
+      c = new List<int>(this.colors);
+      ccl = new List<List<Node>>(this.color_classes.Count);
+
+      for(i=0; i < this.color_classes.Count; i++)
+      {
+        ccl.Add(new List<Node>(this.color_classes[i]));
+      }
+
+      c[min_f.Node.ID] = min_f.Color;
+      ccl[this.colors[min_f.Node.ID] - 1].Remove(min_f.Node);
+      ccl[min_f.Color - 1].Add(min_f.Node);
+      yield return new TabooSearchSolution(this.graph, c, ccl);
+    } 
+
+    public void SetFeatures(List<Feature> features)
     {
       // copying the current state
       int i;
       List<int> c = new List<int>(this.colors);
-      List<List<Node>> ccl = new List<List<Node>>(this.color_classes);
+      List<List<Node>> ccl = new List<List<Node>>(this.color_classes.Count);
       TabooSearchSolution s;
+
+      this.features = features;
+
+      for(i=0; i < this.color_classes.Count; i++)
+      {
+        ccl.Add(new List<Node>(this.color_classes[i]));
+      }
 
       for(i=0; i < features.Count; i++)
       {

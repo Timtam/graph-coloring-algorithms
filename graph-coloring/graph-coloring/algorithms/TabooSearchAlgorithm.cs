@@ -19,6 +19,9 @@ namespace graph_coloring.algorithms
       List<Feature> features = new List<Feature>(this.graph.NodeCount * this.graph.NodeCount);
       Node n;
       TabooSearchSolution s;
+      TabooSearchSolution global_s;
+      double w;
+      double global_w;
       // create list of features first
 
       for(i=0; i < this.graph.NodeCount; i++)
@@ -32,6 +35,12 @@ namespace graph_coloring.algorithms
 
       // get the initial solution
       s = this.GetGreedySolution<TabooSearchSolution>();
+      w = s.GetWorth();
+      global_s = s;
+      global_w = w;
+
+      // calculating feature cost for first solution
+      s.SetFeatures(features);
 
       return s;
     }
