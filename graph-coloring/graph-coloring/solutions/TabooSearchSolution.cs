@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 using graph_coloring;
 using graph_coloring.features;
@@ -31,8 +32,6 @@ namespace graph_coloring.solutions
         if(this.features[i].Cost < min_f.Cost)
           min_f = features[i];
 
-      Console.WriteLine(min_f);
-
       c = new List<int>(this.colors);
       ccl = new List<List<Node>>(Math.Max(this.color_classes.Count, min_f.Color));
 
@@ -60,7 +59,7 @@ namespace graph_coloring.solutions
       List<List<Node>> ccl = new List<List<Node>>(this.graph.NodeCount);
       TabooSearchSolution s;
 
-      this.features = features;
+      this.features = features.Where(f => this.colors[f.Node.ID] != f.Color).ToList();
 
       for(i=0; i < this.graph.NodeCount; i++)
       {

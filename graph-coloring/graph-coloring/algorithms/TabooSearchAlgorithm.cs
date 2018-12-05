@@ -40,12 +40,12 @@ namespace graph_coloring.algorithms
       }
 
       // calculate amount of stored features
-      stored_features = this.graph.NodeCount / 5;
+      stored_features = this.graph.NodeCount;
 
       taboo = new ConcurrentQueue<Feature>();
 
       // get the initial solution
-      s = this.GetGreedySolution<TabooSearchSolution>();
+      s = this.GetSingleColoredSolution<TabooSearchSolution>();
       w = s.GetWorth();
       global_s = s;
       global_w = w;
