@@ -40,5 +40,9 @@ for s in searches:
       cmd_args += ['mono', '--debug']
     cmd_args += ['graph-coloring.exe', file_name, s]
     proc = subprocess.Popen(cmd_args)
-    proc.communicate()
+    try:
+      proc.communicate()
+    except KeyboardInterrupt:
+      print('Tests interrupted')
+      sys.exit()
     print('-' * 40)
