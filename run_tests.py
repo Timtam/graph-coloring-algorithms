@@ -28,12 +28,12 @@ searches = [
 
 files = open(file, 'r').readlines()
 
-for s in searches:
-  for f in files:
-    file_name = os.path.join(os.path.dirname(__file__), 'graph_color', f.strip())
-    if not os.path.exists(file_name):
-      print('Test file ' + file_name + ' not found.')
-      continue
+for f in files:
+  file_name = os.path.join(os.path.dirname(__file__), 'graph_color', f.strip())
+  if not os.path.exists(file_name):
+    print('Test file ' + file_name + ' not found.')
+    continue
+  for s in searches:
     print('Running ' + s + ' on ' + file_name)
     cmd_args = []
     if platform.system() != 'Windows':
