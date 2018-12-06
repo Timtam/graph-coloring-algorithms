@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 using graph_coloring;
 
@@ -29,15 +30,8 @@ namespace graph_coloring.solutions
       processed = new Dictionary<int, List<int>>(this.graph.NodeCount);
 
       for(i=0; i < this.graph.NodeCount; i++)
-        processed.Add(i, new List<int>(this.color_classes.Count));
-
-      while(true)
       {
-
-        i = Randomizer.Next(this.graph.NodeCount);
-
         n = this.graph.GetNode(i);
-
         c = new List<int>(this.color_classes.Count);
 
         for(j=0; j < this.color_classes.Count; j++)
@@ -48,17 +42,21 @@ namespace graph_coloring.solutions
           }
         }
         c.Add(this.GetUnusedColor());
+        processed.Add(i, c);
+      }
 
-        // this node already got all possible colors
-        if(processed[i].Count == c.Count)
-          continue;
+      while(processed.Count > 0)
+      {
 
-        j = c[Randomizer.Next(c.Count)];
+        i = processed.Keys.ToList()[Randomizer.Next(processed.Keys.Count)];
 
-        if(processed[i].IndexOf(j) >= 0)
-          continue;
+        n = this.graph.GetNode(i);
 
-        processed[i].Add(j);
+        j = processed[i][Randomizer.Next(processed[i].Count)];
+
+        processed[i].Remove(j);
+        if(processed[i].Count == 0)
+          processed.Remove(i);
 
         lc = new int[this.colors.Length];
         Array.Copy(this.colors, lc, lc.Length);
