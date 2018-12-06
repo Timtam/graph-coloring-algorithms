@@ -2,6 +2,7 @@
 from __future__ import print_function
 
 import os.path
+import platform
 import subprocess
 import sys
 
@@ -34,6 +35,10 @@ for s in searches:
       print('Test file ' + file_name + ' not found.')
       continue
     print('Running ' + s + ' on ' + file_name)
-    proc = subprocess.Popen(['mono', '--debug', 'graph-coloring.exe', file_name, s])
+    cmd_args = []
+    if platform.system() != 'Windows':
+      cmd_args += ['mono', '--debug']
+    cmd_args += ['graph-coloring.exe', file_name, s]
+    proc = subprocess.Popen(cmd_args)
     proc.communicate()
     print('-' * 40)
