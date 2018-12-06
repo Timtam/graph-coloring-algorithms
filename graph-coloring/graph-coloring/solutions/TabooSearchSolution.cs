@@ -13,7 +13,7 @@ namespace graph_coloring.solutions
     private List<Feature> features;
     public Feature Feature;
 
-    public TabooSearchSolution(Graph g, List<int> c, List<List<Node>> cc = null) : base(g, c, cc)
+    public TabooSearchSolution(Graph g, int[] c, List<List<Node>> cc = null) : base(g, c, cc)
     {
       this.Feature = null;
     }
@@ -21,7 +21,7 @@ namespace graph_coloring.solutions
     public override IEnumerable<object> GetNextNeighbor()
     {
       int i;
-      List<int> c;
+      int[] c;
       List<List<Node>> ccl;
       Feature min_f;
       TabooSearchSolution s;
@@ -32,7 +32,8 @@ namespace graph_coloring.solutions
         if(this.features[i].Cost < min_f.Cost)
           min_f = features[i];
 
-      c = new List<int>(this.colors);
+      c = new int[this.colors.Length];
+      Array.Copy(this.colors, c, c.Length);
       ccl = new List<List<Node>>(Math.Max(this.color_classes.Count, min_f.Color));
 
       for(i=0; i < Math.Max(this.color_classes.Count, min_f.Color); i++)
@@ -55,9 +56,11 @@ namespace graph_coloring.solutions
     {
       // copying the current state
       int i;
-      List<int> c = new List<int>(this.colors);
+      int[] c = new int[this.colors.Length];
       List<List<Node>> ccl = new List<List<Node>>(this.graph.NodeCount);
       TabooSearchSolution s;
+
+      Array.Copy(this.colors, c, c.Length);
 
       this.features = features.Where(f => this.colors[f.Node.ID] != f.Color).ToList();
 

@@ -7,14 +7,15 @@ namespace graph_coloring.solutions
 {
   public class SimulatedAnnealingSolution : LocalSearchSolution
   {
-    public SimulatedAnnealingSolution(Graph g, List<int> c, List<List<Node>> cc = null) : base(g, c, cc)
+    public SimulatedAnnealingSolution(Graph g, int[] c, List<List<Node>> cc = null) : base(g, c, cc)
     {
     }
 
     public override IEnumerable<object> GetNextNeighbor()
     {
       List<List<Node>> ccl;
-      List<int> c, lc;
+      List<int> c;
+      int[] lc;
       int i,j;
       Node n;
       Dictionary<int, List<int>> processed;
@@ -59,7 +60,8 @@ namespace graph_coloring.solutions
 
         processed[i].Add(j);
 
-        lc = new List<int>(this.colors);
+        lc = new int[this.colors.Length];
+        Array.Copy(this.colors, lc, lc.Length);
         ccl[lc[n.ID] - 1].Remove(n);
         lc[n.ID] = j;
         ccl[lc[n.ID] - 1].Add(n);

@@ -2,18 +2,20 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace graph_coloring.solutions
 {
   public class Solution
   {
     protected Graph graph;
-    protected List<int> colors;
+    protected int[] colors;
     protected List<List<Node>> color_classes;
 
-    public Solution(Graph g, List<int> colors, List<List<Node>> color_classes = null)
+    public Solution(Graph g, int[] colors, List<List<Node>> color_classes = null)
     {
-      List<int> c;
+      int[] c;
       int i,sum;
       Node n;
 
@@ -25,17 +27,14 @@ namespace graph_coloring.solutions
         return;
 
       // calculating amount of different colors
-      c = new List<int>(this.colors.Count);
+      c = new int[this.colors.Length];
 
-      for(i=0; i < this.colors.Count; i++)
-        c.Add(0);
-        
-      for(i=0; i<this.colors.Count; i++)
+      for(i=0; i<this.colors.Length; i++)
         if(this.colors[i] > 0)
           c[this.colors[i] - 1]++;
         
       sum = 1;
-      for(i=0; i<this.colors.Count; i++)
+      for(i=0; i<this.colors.Length; i++)
         if(c[this.colors[i] - 1] > 0 && this.colors[i] > sum)
           sum = this.colors[i];
 
@@ -77,18 +76,18 @@ namespace graph_coloring.solutions
 
     public bool IsValid()
     {
-      List<int> invalid = this.GetInvalidEdges();
+      int[] invalid = this.GetInvalidEdges();
 
-      invalid.Sort();
+      Array.Sort(invalid);
 
-      return invalid[invalid.Count - 1] == 0;
+      return invalid[invalid.Length - 1] == 0;
     }
 
     protected int GetUnusedColor()
     {
       int i;
       
-      for(i=0; i < this.colors.Count; i++)
+      for(i=0; i < this.colors.Length; i++)
       {
         if(i < this.color_classes.Count && this.color_classes[i].Count == 0)
           return i + 1;
@@ -98,19 +97,15 @@ namespace graph_coloring.solutions
       return i + 1;
     }
 
-    protected List<int> GetInvalidEdges()
+    protected int[] GetInvalidEdges()
     {
-      List<int> edges = new List<int>(this.color_classes.Count);
-      int i;
+      int[] edges = new int[this.color_classes.Count];
       
-      for(i=0; i < this.color_classes.Count; i++)
-        edges.Add(0);
-
-      for(i=0; i < this.graph.EdgeCount; i++)
+      Parallel.For(0, this.graph.EdgeCount, i =>
       {
         if(this.colors[this.graph.Edges[i].A.ID] == this.colors[this.graph.Edges[i].B.ID])
-          edges[this.colors[this.graph.Edges[i].A.ID] - 1]++;
-      }
+          Interlocked.Increment(ref edges[this.colors[this.graph.Edges[i].A.ID] - 1]);
+      });
 
       return edges;
     }

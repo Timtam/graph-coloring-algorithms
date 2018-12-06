@@ -2,19 +2,22 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace graph_coloring.solutions
 {
   public class LocalSearchSolution : Solution
   {
-    public LocalSearchSolution(Graph g, List<int> colors, List<List<Node>> color_classes = null) : base(g, colors, color_classes)
+    public LocalSearchSolution(Graph g, int[] colors, List<List<Node>> color_classes = null) : base(g, colors, color_classes)
     {
     }
 
     public override IEnumerable<object> GetNextNeighbor()
     {
       List<List<Node>> ccl;
-      List<int> c, lc;
+      List<int> c;
+      int[] lc;
       int i,j;
       Node n;
 
@@ -42,7 +45,9 @@ namespace graph_coloring.solutions
 
         for(j=0; j < c.Count; j++)
         {
-          lc = new List<int>(this.colors);
+          lc = new int[this.colors.Length];
+          Array.Copy(this.colors, lc, lc.Length);
+            
           ccl[lc[n.ID] - 1].Remove(n);
           lc[n.ID] = c[j];
           ccl[lc[n.ID] - 1].Add(n);
@@ -57,12 +62,12 @@ namespace graph_coloring.solutions
     public override double GetWorth()
     {
       double w = 0;
+      int[] invalid_edges;
       int i;
-      List<int> invalid_edges;
 
       invalid_edges = this.GetInvalidEdges();
       
-      for(i=0; i < invalid_edges.Count; i++)
+      for(i=0; i < invalid_edges.Length; i++)
       {
         w += (2.0*invalid_edges[i] - this.color_classes[i].Count) * this.color_classes[i].Count;
       }
