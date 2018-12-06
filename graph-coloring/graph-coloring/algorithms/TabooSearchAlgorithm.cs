@@ -21,6 +21,7 @@ namespace graph_coloring.algorithms
       ConcurrentQueue<Feature> taboo;
       Feature drop;
       int i,j;
+      int useless_steps = 0;
       int stored_features;
       List<Feature> features = new List<Feature>(this.graph.NodeCount * this.graph.NodeCount);
       Node n;
@@ -55,10 +56,11 @@ namespace graph_coloring.algorithms
       // calculating feature cost for first solution
       s.SetFeatures(features);
 
-      while(this.measurement.ElapsedMilliseconds < this.timeout)
+      while(this.measurement.ElapsedMilliseconds < this.timeout && useless_steps <= 100)
       {
         var enumerator = s.GetNextNeighbor().GetEnumerator();
         enumerator.MoveNext();
+        useless_steps++;
         s = (TabooSearchSolution)enumerator.Current;
         taboo.Enqueue(s.Feature);
         if(taboo.Count > stored_features)
@@ -66,6 +68,7 @@ namespace graph_coloring.algorithms
         s.SetFeatures(features.Where(f => !taboo.Contains(f)).ToList());
         if(s.IsValid() && (w = s.GetWorth()) < global_w)
         {
+          useless_steps = 0;
           global_s = s;
           global_w = w;
           while(taboo.Count < 0)
