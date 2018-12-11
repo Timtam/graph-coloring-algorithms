@@ -13,7 +13,7 @@ namespace graph_coloring.solutions
     private List<Feature> features;
     public Feature Feature;
 
-    public TabooSearchSolution(Graph g, int[] c, List<List<Node>> cc = null) : base(g, c, cc)
+    public TabooSearchSolution(Graph g, int[] c) : base(g, c)
     {
       this.Feature = null;
     }
@@ -22,7 +22,6 @@ namespace graph_coloring.solutions
     {
       int i;
       int[] c;
-      List<List<Node>> ccl;
       Feature min_f;
       TabooSearchSolution s;
 
@@ -34,20 +33,9 @@ namespace graph_coloring.solutions
 
       c = new int[this.colors.Length];
       Array.Copy(this.colors, c, c.Length);
-      ccl = new List<List<Node>>(Math.Max(this.color_classes.Count, min_f.Color));
-
-      for(i=0; i < Math.Max(this.color_classes.Count, min_f.Color); i++)
-      {
-        if(i < this.color_classes.Count)
-          ccl.Add(new List<Node>(this.color_classes[i]));
-        else
-          ccl.Add(new List<Node>(this.graph.NodeCount));
-      }
 
       c[min_f.Node.ID] = min_f.Color;
-      ccl[this.colors[min_f.Node.ID] - 1].Remove(min_f.Node);
-      ccl[min_f.Color - 1].Add(min_f.Node);
-      s = new TabooSearchSolution(this.graph, c, ccl);
+      s = new TabooSearchSolution(this.graph, c);
       s.Feature = min_f;
       yield return s;
     } 
@@ -57,33 +45,19 @@ namespace graph_coloring.solutions
       // copying the current state
       int i;
       int[] c = new int[this.colors.Length];
-      List<List<Node>> ccl = new List<List<Node>>(this.graph.NodeCount);
       TabooSearchSolution s;
 
       Array.Copy(this.colors, c, c.Length);
 
       this.features = features.Where(f => this.colors[f.Node.ID] != f.Color).ToList();
 
-      for(i=0; i < this.graph.NodeCount; i++)
-      {
-        if(i < this.color_classes.Count)
-          ccl.Add(new List<Node>(this.color_classes[i]));
-        else
-          ccl.Add(new List<Node>(this.graph.NodeCount));
-      }
-
       for(i=0; i < features.Count; i++)
       {
         // changing the color within the copied color array
         c[features[i].Node.ID] = features[i].Color;
-        // change color classes
-        ccl[this.colors[features[i].Node.ID] - 1].Remove(features[i].Node);
-        ccl[features[i].Color - 1].Add(features[i].Node);
-        s = new TabooSearchSolution(this.graph, c, ccl);
+        s = new TabooSearchSolution(this.graph, c);
         features[i].Cost = s.GetWorth();
         // reverting changes
-        ccl[features[i].Color - 1].Remove(features[i].Node);
-        ccl[this.colors[features[i].Node.ID] - 1].Add(features[i].Node);
         c[features[i].Node.ID] = this.colors[features[i].Node.ID];
       }
     }

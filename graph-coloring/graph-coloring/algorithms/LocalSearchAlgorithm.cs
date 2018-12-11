@@ -37,7 +37,7 @@ namespace graph_coloring.algorithms
       }
 
       // we finished with that solution
-      return (T)Activator.CreateInstance(typeof(T), this.graph, this.colors.ToArray(), null);
+      return (T)Activator.CreateInstance(typeof(T), this.graph, this.colors.ToArray());
     }
 
     protected T GetSingleColoredSolution<T>()
@@ -47,7 +47,7 @@ namespace graph_coloring.algorithms
       for(i=0; i < this.graph.NodeCount; i++)
         this.colors[i] = 1;
 
-      return (T)Activator.CreateInstance(typeof(T), this.graph, this.colors.ToArray(), null);
+      return (T)Activator.CreateInstance(typeof(T), this.graph, this.colors.ToArray());
     }
 
     // runs the local search algorithm on the given graph

@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -9,38 +10,24 @@ namespace graph_coloring.solutions
 {
   public class LocalSearchSolution : Solution
   {
-    public LocalSearchSolution(Graph g, int[] colors, List<List<Node>> color_classes = null) : base(g, colors, color_classes)
+    public LocalSearchSolution(Graph g, int[] colors) : base(g, colors)
     {
     }
 
     public override IEnumerable<object> GetNextNeighbor()
     {
-      List<List<Node>> ccl;
       List<int> c;
       int[] lc;
       int i,j;
       Node n;
-
-      ccl = new List<List<Node>>(this.color_classes.Count + 1);
-        
-      for(j=0; j < this.color_classes.Count; j++)
-        ccl.Add(new List<Node>(this.color_classes[j]));
-      ccl.Add(new List<Node>(this.color_classes[0].Capacity));
 
       for(i=0; i < this.graph.NodeCount; i++)
       {
 
         n = this.graph.GetNode(i);
 
-        c = new List<int>(this.color_classes.Count);
-
-        for(j=0; j < this.color_classes.Count; j++)
-        {
-          if(this.color_classes[j].Count > 0 && (this.colors[n.ID] - 1) != j)
-          {
-            c.Add(j + 1);
-          }
-        }
+        c = new List<int>(this.colors.Distinct());
+        c.Remove(this.colors[n.ID]);
         c.Add(this.GetUnusedColor());
 
         for(j=0; j < c.Count; j++)
@@ -48,12 +35,8 @@ namespace graph_coloring.solutions
           lc = new int[this.colors.Length];
           Array.Copy(this.colors, lc, lc.Length);
             
-          ccl[lc[n.ID] - 1].Remove(n);
           lc[n.ID] = c[j];
-          ccl[lc[n.ID] - 1].Add(n);
-          yield return new LocalSearchSolution(this.graph, lc, ccl);
-          ccl[lc[n.ID] - 1].Remove(n);
-          ccl[this.colors[n.ID] - 1].Add(n);
+          yield return new LocalSearchSolution(this.graph, lc);
         }
 
       }
@@ -64,12 +47,18 @@ namespace graph_coloring.solutions
       double w = 0;
       int[] invalid_edges;
       int i;
+      int[] ccl;
 
       invalid_edges = this.GetInvalidEdges();
       
+      ccl = new int[invalid_edges.Length];
+
+      for(i=0; i < this.colors.Length; i++)
+        ccl[this.colors[i] - 1]++;
+
       for(i=0; i < invalid_edges.Length; i++)
       {
-        w += (2.0*invalid_edges[i] - this.color_classes[i].Count) * this.color_classes[i].Count;
+        w += (2.0*invalid_edges[i] - ccl[i]) * ccl[i];
       }
 
       return w;
