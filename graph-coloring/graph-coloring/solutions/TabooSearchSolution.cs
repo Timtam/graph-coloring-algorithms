@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 using graph_coloring;
 using graph_coloring.features;
@@ -10,12 +11,11 @@ namespace graph_coloring.solutions
   public class TabooSearchSolution : LocalSearchSolution
   {
 
-    private List<Feature> features;
+    private Feature[] features;
     public Feature Feature;
 
     public TabooSearchSolution(Graph g, int[] c) : base(g, c)
     {
-      this.Feature = null;
     }
 
     public override IEnumerable<object> GetNextNeighbor()
@@ -27,7 +27,7 @@ namespace graph_coloring.solutions
 
       min_f = this.features[0];
 
-      for(i=1; i < this.features.Count; i++)
+      for(i=1; i < this.features.Length; i++)
         if(this.features[i].Cost < min_f.Cost)
           min_f = features[i];
 
@@ -40,26 +40,21 @@ namespace graph_coloring.solutions
       yield return s;
     } 
 
-    public void SetFeatures(List<Feature> features)
+    public void SetFeatures(Feature[] features)
     {
-      // copying the current state
-      int i;
-      int[] c = new int[this.colors.Length];
-      TabooSearchSolution s;
+      this.features = features.Where(f => this.colors[f.Node.ID] != f.Color).ToArray();
 
-      Array.Copy(this.colors, c, c.Length);
-
-      this.features = features.Where(f => this.colors[f.Node.ID] != f.Color).ToList();
-
-      for(i=0; i < features.Count; i++)
+      Parallel.For(0, this.features.Length, (i) =>
       {
+        int[] c = new int[this.colors.Length];
+        TabooSearchSolution s;
+
+        Array.Copy(this.colors, c, c.Length);
         // changing the color within the copied color array
-        c[features[i].Node.ID] = features[i].Color;
+        c[this.features[i].Node.ID] = this.features[i].Color;
         s = new TabooSearchSolution(this.graph, c);
-        features[i].Cost = s.GetWorth();
-        // reverting changes
-        c[features[i].Node.ID] = this.colors[features[i].Node.ID];
-      }
+        this.features[i].Cost = s.GetWorth();
+      });
     }
   }
 }

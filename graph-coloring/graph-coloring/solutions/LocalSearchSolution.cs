@@ -46,21 +46,33 @@ namespace graph_coloring.solutions
     {
       double w = 0;
       int[] invalid_edges;
-      int i;
       int[] ccl;
+      Object sync = new Object();
 
       invalid_edges = this.GetInvalidEdges();
       
       ccl = new int[invalid_edges.Length];
 
-      for(i=0; i < this.colors.Length; i++)
-        ccl[this.colors[i] - 1]++;
-
-      for(i=0; i < invalid_edges.Length; i++)
+      Parallel.For(0, this.colors.Length, (i) =>
       {
-        w += (2.0*invalid_edges[i] - ccl[i]) * ccl[i];
-      }
+        Interlocked.Increment(ref ccl[this.colors[i] - 1]);
+      });
 
+      Parallel.For<double>(0, invalid_edges.Length,
+        () => 0.0,
+        (int i, ParallelLoopState pls, double state) =>
+        {
+          state += (2.0*invalid_edges[i] - ccl[i]) * ccl[i];
+          return state;
+        },
+        (double state) => {
+          lock (sync)
+          {
+            w += state;
+          }
+        }
+      );
+        
       return w;
     }
   }

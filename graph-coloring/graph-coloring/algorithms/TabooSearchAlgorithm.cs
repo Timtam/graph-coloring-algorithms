@@ -20,10 +20,10 @@ namespace graph_coloring.algorithms
     {
       ConcurrentQueue<Feature> taboo;
       Feature drop;
-      int i,j;
+      int i,j,k;
       int useless_steps = 0;
       int stored_features;
-      List<Feature> features = new List<Feature>(this.graph.NodeCount * this.graph.NodeCount);
+      Feature[] features = new Feature[(this.graph.NodeCount * this.graph.NodeCount)];
       Node n;
       TabooSearchSolution s;
       TabooSearchSolution global_s;
@@ -31,12 +31,16 @@ namespace graph_coloring.algorithms
       double global_w;
       // create list of features first
 
+      k = 0;
       for(i=0; i < this.graph.NodeCount; i++)
       {
         n = this.graph.GetNode(i);
         for(j=0; j < this.graph.NodeCount; j++)
         {
-          features.Add(new Feature(n, j + 1));
+          features[k].Node = n;
+          features[k].Color = j + 1;
+          features[k].Cost = 0.0;
+          k++;
         }
       }
 
@@ -65,7 +69,7 @@ namespace graph_coloring.algorithms
         taboo.Enqueue(s.Feature);
         if(taboo.Count > stored_features)
           taboo.TryDequeue(out drop);
-        s.SetFeatures(features.Where(f => !taboo.Contains(f)).ToList());
+        s.SetFeatures(features.Where(f => !taboo.Contains(f)).ToArray());
         if(s.IsValid() && (w = s.GetWorth()) < global_w)
         {
           useless_steps = 0;
