@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="algorithms\Algorithm.cs" />
+    <Compile Include="algorithms\GeneticAlgorithm.cs" />
     <Compile Include="algorithms\LocalSearchAlgorithm.cs" />
     <Compile Include="algorithms\SimulatedAnnealingAlgorithm.cs" />
     <Compile Include="algorithms\TabooSearchAlgorithm.cs" />
@@ -54,6 +55,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RandomGraphGenerator.cs" />
     <Compile Include="Randomizer.cs" />
+    <Compile Include="solutions\GeneticSolution.cs" />
     <Compile Include="solutions\LocalSearchSolution.cs" />
     <Compile Include="solutions\SimulatedAnnealingSolution.cs" />
     <Compile Include="solutions\Solution.cs" />
