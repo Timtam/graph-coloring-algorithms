@@ -11,12 +11,14 @@ namespace graph_coloring.solutions
   public class Solution
   {
     protected Graph graph;
-    protected int[] colors;
+    public int[] colors;
+    private double worth;
 
     public Solution(Graph g, int[] colors)
     {
       this.graph = g;
       this.colors = colors;
+      this.worth = double.MaxValue;
     }
 
     public virtual IEnumerable<object> GetNextNeighbor()
@@ -24,9 +26,43 @@ namespace graph_coloring.solutions
       yield return new Solution(null, null);
     }
     
-    public virtual double GetWorth()
+    public double GetWorth()
     {
-      return 0;
+      double w = 0;
+      int[] invalid_edges;
+      int[] ccl;
+      Object sync = new Object();
+
+      if(this.worth != double.MaxValue)
+        return this.worth;
+
+      invalid_edges = this.GetInvalidEdges();
+      
+      ccl = new int[invalid_edges.Length];
+
+      Parallel.For(0, this.colors.Length, (i) =>
+      {
+        Interlocked.Increment(ref ccl[this.colors[i] - 1]);
+      });
+
+      Parallel.For<double>(0, invalid_edges.Length,
+        () => 0.0,
+        (int i, ParallelLoopState pls, double state) =>
+        {
+          state += (2.0*invalid_edges[i] - ccl[i]) * ccl[i];
+          return state;
+        },
+        (double state) => {
+          lock (sync)
+          {
+            w += state;
+          }
+        }
+      );
+        
+      this.worth = w;
+
+      return w;
     }
 
     public int ColorCount

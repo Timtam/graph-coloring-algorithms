@@ -41,39 +41,5 @@ namespace graph_coloring.solutions
 
       }
     }
-
-    public override double GetWorth()
-    {
-      double w = 0;
-      int[] invalid_edges;
-      int[] ccl;
-      Object sync = new Object();
-
-      invalid_edges = this.GetInvalidEdges();
-      
-      ccl = new int[invalid_edges.Length];
-
-      Parallel.For(0, this.colors.Length, (i) =>
-      {
-        Interlocked.Increment(ref ccl[this.colors[i] - 1]);
-      });
-
-      Parallel.For<double>(0, invalid_edges.Length,
-        () => 0.0,
-        (int i, ParallelLoopState pls, double state) =>
-        {
-          state += (2.0*invalid_edges[i] - ccl[i]) * ccl[i];
-          return state;
-        },
-        (double state) => {
-          lock (sync)
-          {
-            w += state;
-          }
-        }
-      );
-        
-      return w;
-    }
   }
 }
