@@ -36,6 +36,7 @@ namespace graph_coloring
         Console.WriteLine("\t          processing some algorithms");
         Console.WriteLine("");
         Console.WriteLine("Currently supported algorithms:");
+        Console.WriteLine("\tgenetic");
         Console.WriteLine("\tlocal-search");
         Console.WriteLine("\tsimulated-annealing");
         Console.WriteLine("\ttaboo-search");
@@ -92,6 +93,9 @@ namespace graph_coloring
           break;
         case "taboo-search":
           s = new TabooSearchAlgorithm(graph);
+          break;
+        case "genetic":
+          s = new GeneticAlgorithm(graph);
           break;
         default:
           Console.WriteLine("no algorithm with name " + algorithm + " found");

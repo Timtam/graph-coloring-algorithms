@@ -23,7 +23,8 @@ if not os.path.exists(file):
 searches = [
   'local-search',
   'simulated-annealing',
-  'taboo-search'
+  'taboo-search',
+  'genetic'
 ]
 
 files = open(file, 'r').readlines()
@@ -42,6 +43,10 @@ for f in files:
     proc = subprocess.Popen(cmd_args)
     try:
       proc.communicate()
+
+      if proc.returncode != 0:
+        print("An error occurred during test, cancelling follow-ups")
+        sys.exit()
     except KeyboardInterrupt:
       print('Tests interrupted')
       sys.exit()
