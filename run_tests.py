@@ -24,7 +24,8 @@ searches = [
   'local-search',
   'simulated-annealing',
   'taboo-search',
-  'genetic'
+  'genetic-onepoint',
+  'genetic-twopoint',
 ]
 
 files = open(file, 'r').readlines()

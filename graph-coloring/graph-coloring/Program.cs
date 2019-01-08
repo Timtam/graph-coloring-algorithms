@@ -36,7 +36,8 @@ namespace graph_coloring
         Console.WriteLine("\t          processing some algorithms");
         Console.WriteLine("");
         Console.WriteLine("Currently supported algorithms:");
-        Console.WriteLine("\tgenetic");
+        Console.WriteLine("\tgenetic-onepoint");
+        Console.WriteLine("\tgenetic-twopoint");
         Console.WriteLine("\tlocal-search");
         Console.WriteLine("\tsimulated-annealing");
         Console.WriteLine("\ttaboo-search");
@@ -94,15 +95,20 @@ namespace graph_coloring
         case "taboo-search":
           s = new TabooSearchAlgorithm(graph);
           break;
-        case "genetic":
+        case "genetic-onepoint":
           s = new GeneticAlgorithm(graph);
+          ((GeneticAlgorithm)s).SetCrossoverStrategy(1);
+          break;
+        case "genetic-twopoint":
+          s = new GeneticAlgorithm(graph);
+          ((GeneticAlgorithm)s).SetCrossoverStrategy(2);
           break;
         default:
           Console.WriteLine("no algorithm with name " + algorithm + " found");
           return;
       }
 
-      Console.WriteLine("Running " + s.Name + " on graph");
+      Console.WriteLine("Running " + s.GetName() + " on graph");
       if(timeout >= 0)
         s.SetTimeout(timeout);
 
@@ -112,7 +118,7 @@ namespace graph_coloring
       else
         Console.WriteLine("Timeout set to " + timeout + " milliseconds.");
       ss = s.Run();
-      Console.WriteLine("Coloring through " + s.Name + " finished successfully.");
+      Console.WriteLine("Coloring through " + s.GetName() + " finished successfully.");
       Console.WriteLine("Finished with " + ss.ColorCount + " colors needed");
       Console.WriteLine("Algorithm took " + s.Duration + " to run.");
       if(ss.IsValid() == true)

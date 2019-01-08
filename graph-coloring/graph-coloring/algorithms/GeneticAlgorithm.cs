@@ -11,8 +11,9 @@ namespace graph_coloring.algorithms
   {
 
     private const int Amount_Start_Solutions = 100;
+    private int CrossoverStrategy = 1; // 1 = onepoint, 2 = twopoint
 
-    public GeneticAlgorithm(Graph g) : base(g, "genetic")
+    public GeneticAlgorithm(Graph g) : base(g)
     {
       this.SetTimeout(120000);
     }
@@ -67,7 +68,10 @@ namespace graph_coloring.algorithms
         {
           for(j=i + 1; j < Amount_Start_Solutions / 2; j++)
           {
-            t = GeneticSolution.OnePointCrossover(neighbors[i], neighbors[j]);
+            if(this.CrossoverStrategy == 1)
+              t = GeneticSolution.OnePointCrossover(neighbors[i], neighbors[j]);
+            else
+              t = GeneticSolution.TwoPointCrossover(neighbors[i], neighbors[j]);
             siblings.Add(t.Item1);
             siblings.Add(t.Item2);
           }
@@ -98,6 +102,27 @@ namespace graph_coloring.algorithms
     public override void SetTimeout(int t)
     {
       this.timeout = t;
+    }
+
+    public override string GetName()
+    {
+      switch(this.CrossoverStrategy)
+      {
+        case 1:
+          return "genetic-onepoint";
+        case 2:
+          return "genetic-twopoint";
+        default:
+          return "genetic-unknown";
+      }
+    }
+
+    public void SetCrossoverStrategy(int s)
+    {
+      if(s != 1 && s != 2)
+        throw new ArgumentOutOfRangeException("only 1 or 2 for onepoint or twopoint crossover allowed");
+
+      this.CrossoverStrategy = s;
     }
   }
 }
