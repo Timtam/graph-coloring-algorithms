@@ -11,7 +11,7 @@ namespace graph_coloring.solutions
   public class Solution
   {
     protected Graph graph;
-    public int[] colors;
+    protected int[] colors;
     private double worth;
 
     public Solution(Graph g, int[] colors)
@@ -31,6 +31,7 @@ namespace graph_coloring.solutions
       double w = 0;
       int[] invalid_edges;
       int[] ccl;
+      int k;
       Object sync = new Object();
 
       if(this.worth != double.MaxValue)
@@ -40,10 +41,8 @@ namespace graph_coloring.solutions
       
       ccl = new int[invalid_edges.Length];
 
-      Parallel.For(0, this.colors.Length, (i) =>
-      {
-        Interlocked.Increment(ref ccl[this.colors[i] - 1]);
-      });
+      for(k=0; k < this.colors.Length; k++)
+        ccl[this.colors[k] - 1]++;
 
       Parallel.For<double>(0, invalid_edges.Length,
         () => 0.0,
@@ -113,6 +112,11 @@ namespace graph_coloring.solutions
       });
 
       return edges;
+    }
+
+    public T Copy<T>()
+    {
+      return (T)Activator.CreateInstance(typeof(T), this.graph, this.colors);
     }
   }
 }

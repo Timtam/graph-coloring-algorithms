@@ -14,14 +14,6 @@ namespace graph_coloring.solutions
     {
     }
 
-    public override IEnumerable<object> GetNextNeighbor()
-    {
-      foreach(var s in base.GetNextNeighbor())
-      {
-        yield return new GeneticSolution(this.graph, ((Solution)s).colors);
-      }
-    }
-
     public static Tuple<GeneticSolution, GeneticSolution> OnePointCrossover(GeneticSolution s1, GeneticSolution s2)
     {
       int[] c;
@@ -81,7 +73,7 @@ namespace graph_coloring.solutions
         rd = Randomizer.NextDouble();
         if(rd < 0.05)
         {
-          ri = Randomizer.Next(this.colors.Length + 1);
+          ri = Randomizer.Next(this.colors.Length) + 1;
           this.colors[i] = ri;
         }
       }

@@ -55,7 +55,7 @@ namespace graph_coloring.algorithms
         {
           var enumerator = solutions[i].GetNextNeighbor().GetEnumerator();
           enumerator.MoveNext();
-          neighbors.Add((GeneticSolution)enumerator.Current);
+          neighbors.Add(((Solution)enumerator.Current).Copy<GeneticSolution>());
         }
 
         // only the best survive
