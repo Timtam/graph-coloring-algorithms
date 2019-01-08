@@ -42,7 +42,10 @@ namespace graph_coloring.solutions
 
     public void SetFeatures(Feature[] features)
     {
-      this.features = features.Where(f => this.colors[f.Node.ID] != f.Color).ToArray();
+      int[] cl = this.colors.Distinct().ToArray();
+      int uc = this.GetUnusedColor();
+
+      this.features = features.Where(f => this.colors[f.Node.ID] != f.Color && (cl.Contains(f.Color) || uc == f.Color)).ToArray();
 
       Parallel.For(0, this.features.Length, (i) =>
       {
