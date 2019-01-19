@@ -46,6 +46,8 @@ namespace graph_coloring
         Console.WriteLine("\t\tOptions:");
         Console.WriteLine("\t\t\tstart temperature to use (default 30)");
         Console.WriteLine("\ttaboo-search");
+        Console.WriteLine("\t\tOptions:");
+        Console.WriteLine("\t\t\ttaboo list length to use (default amount of nodes in graph)");
         return 0;
       }
       else if(args.Length == 1)

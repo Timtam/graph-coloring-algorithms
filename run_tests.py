@@ -35,6 +35,8 @@ for s in SEARCHES:
   # handling algorithm-specific arguments
   if s == "simulated-annealing":
     p.add_argument("-t", "--start-temperature", help = "start temperature to use for all simulated annealing runs (default 30)", default = 30, type = int)
+  elif s == "taboo-search":
+    p.add_argument("-l", "--taboo-list-length", help = "length of taboo list (default amount of nodes within graph", type=int, default=0)
 
 if not os.path.exists(os.path.join(os.path.dirname(__file__), 'graph_color')):
   print('Cannot find folder with test data')
@@ -74,6 +76,8 @@ for f in files:
     # handling algorithm-specific parameters
     if s == "simulated-annealing":
       cmd_args += [str(args.start_temperature)]
+    elif s == "taboo-search" and args.taboo_list_length != 0:
+      cmd_args += [str(args.taboo_list_length)]
 
     proc = subprocess.Popen(cmd_args)
     try:

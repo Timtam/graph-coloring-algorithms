@@ -11,9 +11,12 @@ namespace graph_coloring.algorithms
 {
   public class TabooSearchAlgorithm : LocalSearchAlgorithm
   {
+    private int taboo_list_length;
+
     public TabooSearchAlgorithm(Graph g) : base(g, "taboo search")
     {
       this.SetTimeout(120000);
+      this.SetTabooListLength(g.NodeCount);
     }
 
     public override Solution Run()
@@ -45,7 +48,7 @@ namespace graph_coloring.algorithms
       }
 
       // calculate amount of stored features
-      stored_features = this.graph.NodeCount;
+      stored_features = this.taboo_list_length;
 
       taboo = new ConcurrentQueue<Feature>();
 
@@ -54,6 +57,8 @@ namespace graph_coloring.algorithms
       w = s.GetWorth();
       global_s = s;
       global_w = w;
+
+      Console.WriteLine("taboo list length set to " + stored_features);
 
       this.RunBefore();
 
@@ -88,6 +93,36 @@ namespace graph_coloring.algorithms
     public override void SetTimeout(int t)
     {
       this.timeout = t;
+    }
+
+    public void SetTabooListLength(int t)
+    {
+      if(t <= 0)
+        throw new ArgumentException("taboo list cannot be equal or less than 0");
+      this.taboo_list_length = t;
+    }
+
+    public int GetTabooListLength()
+    {
+      return this.taboo_list_length;
+    }
+
+    public override void SetParameters(string[] param)
+    {
+      if(param.Length == 0)
+        return;
+      
+      if(param.Length >= 1)
+      {
+        try
+        {
+          this.SetTabooListLength(int.Parse(param[0]));
+        }
+        catch(FormatException)
+        {
+          throw new ArgumentException("taboo list length must be numeric");
+        }
+      }
     }
   }
 }
