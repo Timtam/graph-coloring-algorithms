@@ -31,6 +31,10 @@ for s in SEARCHES:
     s
   )
 
+  # handling algorithm-specific arguments
+  if s == "simulated-annealing":
+    p.add_argument("-t", "--start-temperature", help = "start temperature to use for all simulated annealing runs (default 30)", default = 30)
+
 if not os.path.exists(os.path.join(os.path.dirname(__file__), 'graph_color')):
   print('Cannot find folder with test data')
   sys.exit()
@@ -64,7 +68,12 @@ for f in files:
     cmd_args = []
     if platform.system() != 'Windows':
       cmd_args += ['mono', '--debug']
-    cmd_args += ['graph-coloring.exe', file_name, s]
+    cmd_args += ['graph-coloring.exe', file_name, s, "120000"]
+
+    # handling algorithm-specific parameters
+    if s == "simulated-annealing":
+      cmd_args += [str(args.start_temperature)]
+
     proc = subprocess.Popen(cmd_args)
     try:
       proc.communicate()
