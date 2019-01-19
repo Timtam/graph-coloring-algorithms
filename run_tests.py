@@ -35,6 +35,7 @@ for s in SEARCHES:
   # handling algorithm-specific arguments
   if s == "simulated-annealing":
     p.add_argument("-t", "--start-temperature", help = "start temperature to use for all simulated annealing runs (default 30)", default = 30, type = int)
+    p.add_argument("-f", "--annealing-factor", help = "annealing factor used (default 1.0", type=float, default = 1.0)
   elif s == "taboo-search":
     p.add_argument("-l", "--taboo-list-length", help = "length of taboo list (default amount of nodes within graph", type=int, default=0)
 
@@ -75,7 +76,7 @@ for f in files:
 
     # handling algorithm-specific parameters
     if s == "simulated-annealing":
-      cmd_args += [str(args.start_temperature)]
+      cmd_args += [str(args.start_temperature), str(args.annealing_factor)]
     elif s == "taboo-search" and args.taboo_list_length != 0:
       cmd_args += [str(args.taboo_list_length)]
 

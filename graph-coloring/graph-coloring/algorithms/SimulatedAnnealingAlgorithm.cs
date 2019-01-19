@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 
 using graph_coloring;
 using graph_coloring.solutions;
@@ -9,11 +10,13 @@ namespace graph_coloring.algorithms
   public class SimulatedAnnealingAlgorithm : LocalSearchAlgorithm
   {
     private int start_temperature;
+    private double annealing_factor;
 
     public SimulatedAnnealingAlgorithm(Graph g) : base(g, "simulated annealing")
     {
       this.SetStartTemperature(30);
       this.SetTimeout(120000);
+      this.SetAnnealingFactor(1.0);
     }
 
     public override Solution Run()
@@ -27,6 +30,7 @@ namespace graph_coloring.algorithms
       double p;
       
       Console.WriteLine("start temperature set to " + this.GetStartTemperature());
+      Console.WriteLine("annealing factor set to " + this.GetAnnealingFactor());
 
       this.RunBefore();
 
@@ -49,7 +53,7 @@ namespace graph_coloring.algorithms
           }
           else if(tmp_w > w)
           {
-            p = Math.Exp((w - tmp_w) * Math.Log(k, 2) / this.start_temperature);
+            p = Math.Exp((w - tmp_w) * this.annealing_factor * Math.Log(k, 2) / this.start_temperature);
 
             if(Randomizer.NextDouble() < p)
             {
@@ -88,7 +92,7 @@ namespace graph_coloring.algorithms
     public override void SetParameters(string[] param)
     {
 
-      if(param.Length == 1)
+      if(param.Length >= 1)
       {
         try
         {
@@ -99,8 +103,30 @@ namespace graph_coloring.algorithms
           throw new System.ArgumentException("start temperature must be numeric");
         }
       }
-      else if(param.Length > 1)
-        throw new ArgumentException("too many arguments for simulated annealing");
+
+      if(param.Length >= 2)
+      {
+        try
+        {
+          this.SetAnnealingFactor(Double.Parse(param[1], CultureInfo.InvariantCulture.NumberFormat));
+        }
+        catch(FormatException)
+        {
+          throw new ArgumentException("annealing factor must be a floating point number");
+        }
+      }
+    }
+
+    public void SetAnnealingFactor(double f)
+    {
+      if(f <= 0)
+        throw new ArgumentException("annealing factor may not be equal or less than 0");
+      this.annealing_factor = f;
+    }
+
+    public double GetAnnealingFactor()
+    {
+      return this.annealing_factor;
     }
   }
 }

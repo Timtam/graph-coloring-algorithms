@@ -45,6 +45,7 @@ namespace graph_coloring
         Console.WriteLine("\tsimulated-annealing");
         Console.WriteLine("\t\tOptions:");
         Console.WriteLine("\t\t\tstart temperature to use (default 30)");
+        Console.WriteLine("\t\t\tannealing factor to use (default 1.0)");
         Console.WriteLine("\ttaboo-search");
         Console.WriteLine("\t\tOptions:");
         Console.WriteLine("\t\t\ttaboo list length to use (default amount of nodes in graph)");
