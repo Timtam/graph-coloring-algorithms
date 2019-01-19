@@ -10,18 +10,19 @@ namespace graph_coloring.algorithms
   public class GeneticAlgorithm : Algorithm
   {
 
-    private const int Amount_Start_Solutions = 100;
+    private int amount_start_solutions;
     private int CrossoverStrategy = 1; // 1 = onepoint, 2 = twopoint
 
     public GeneticAlgorithm(Graph g) : base(g)
     {
       this.SetTimeout(120000);
+      this.SetAmountStartSolutions(100);
     }
 
     public override Solution Run()
     {
-      List<GeneticSolution> solutions = new List<GeneticSolution>(Amount_Start_Solutions);
-      List<GeneticSolution> siblings = new List<GeneticSolution>((Amount_Start_Solutions/2)*(Amount_Start_Solutions/2));
+      List<GeneticSolution> solutions = new List<GeneticSolution>(this.GetAmountStartSolutions());
+      List<GeneticSolution> siblings = new List<GeneticSolution>((this.GetAmountStartSolutions()/2)*(this.GetAmountStartSolutions()/2));
       int i,j,r;
       int[] c;
       double limit_w = 2.0*this.graph.EdgeCount*this.graph.NodeCount;
@@ -30,7 +31,7 @@ namespace graph_coloring.algorithms
       Tuple<GeneticSolution, GeneticSolution> t;
       GeneticSolution s;
 
-      for(i=0; i < Amount_Start_Solutions; i++)
+      for(i=0; i < this.GetAmountStartSolutions(); i++)
       {
         c = new int[this.graph.NodeCount];
         for(j=0; j < this.graph.NodeCount; j++)
@@ -46,13 +47,15 @@ namespace graph_coloring.algorithms
       s = solutions[0];
       w = s.GetWorth();
 
+      Console.WriteLine("amount of start solutions set to " + this.GetAmountStartSolutions());
+
       this.RunBefore();
 
       while(this.measurement.ElapsedMilliseconds < this.timeout)
       {
-        neighbors = new List<GeneticSolution>(Amount_Start_Solutions);
+        neighbors = new List<GeneticSolution>(this.GetAmountStartSolutions());
         siblings.Clear();
-        for(i=0; i < Amount_Start_Solutions; i++)
+        for(i=0; i < this.GetAmountStartSolutions(); i++)
         {
           var enumerator = solutions[i].GetNextNeighbor().GetEnumerator();
           enumerator.MoveNext();
@@ -60,13 +63,13 @@ namespace graph_coloring.algorithms
         }
 
         // only the best survive
-        neighbors = neighbors.OrderBy(o => o.GetWorth() / limit_w).Take(Amount_Start_Solutions/2).ToList();
+        neighbors = neighbors.OrderBy(o => o.GetWorth() / limit_w).Take(this.GetAmountStartSolutions()/2).ToList();
 
         // and those will generate siblings
 
-        for(i=0; i < Amount_Start_Solutions / 2; i++)
+        for(i=0; i < this.GetAmountStartSolutions() / 2; i++)
         {
-          for(j=i + 1; j < Amount_Start_Solutions / 2; j++)
+          for(j=i + 1; j < this.GetAmountStartSolutions() / 2; j++)
           {
             if(this.CrossoverStrategy == 1)
               t = GeneticSolution.OnePointCrossover(neighbors[i], neighbors[j]);
@@ -77,11 +80,11 @@ namespace graph_coloring.algorithms
           }
         }
 
-        // only Amount_Start_Solutions siblings may survive to prevent a neverending population
-        solutions = siblings.OrderBy(o => o.GetWorth() / limit_w).Take(Amount_Start_Solutions).ToList();
+        // only amount of start solutionssiblings may survive to prevent a neverending population
+        solutions = siblings.OrderBy(o => o.GetWorth() / limit_w).Take(this.GetAmountStartSolutions()).ToList();
 
         // loop over all solutions and mutate random genes
-        for(i=0; i < Amount_Start_Solutions; i++)
+        for(i=0; i < this.GetAmountStartSolutions(); i++)
           solutions[i].MutateRandomly();
 
         // we order the solutions to find the best
@@ -123,6 +126,35 @@ namespace graph_coloring.algorithms
         throw new ArgumentOutOfRangeException("only 1 or 2 for onepoint or twopoint crossover allowed");
 
       this.CrossoverStrategy = s;
+    }
+
+    public void SetAmountStartSolutions(int a)
+    {
+      if(a <= 0)
+        throw new ArgumentException("there must be at least one start solution");
+      this.amount_start_solutions = a;
+    }
+
+    public int GetAmountStartSolutions()
+    {
+      return this.amount_start_solutions;
+    }
+    
+    public override void SetParameters(string[] param)
+    {
+      if(param.Length == 0)
+        return;
+      if(param.Length >= 1)
+      {
+        try
+        {
+          this.SetAmountStartSolutions(int.Parse(param[0]));
+        }
+        catch(FormatException)
+        {
+          throw new ArgumentException("amount of start solutions must be numeric");
+        }
+      }
     }
   }
 }

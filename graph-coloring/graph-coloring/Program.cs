@@ -40,7 +40,11 @@ namespace graph_coloring
         Console.WriteLine("");
         Console.WriteLine("Currently supported algorithms:");
         Console.WriteLine("\tgenetic-onepoint");
+        Console.WriteLine("\t\tOptions:");
+        Console.WriteLine("\t\t\tamount of start solutions (default 100)");
         Console.WriteLine("\tgenetic-twopoint");
+        Console.WriteLine("\t\tOptions:");
+        Console.WriteLine("\t\t\tamount of start solutions (default 100)");
         Console.WriteLine("\tlocal-search");
         Console.WriteLine("\tsimulated-annealing");
         Console.WriteLine("\t\tOptions:");
