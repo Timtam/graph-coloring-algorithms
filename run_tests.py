@@ -1,10 +1,35 @@
 #!/usr/bin/python
 from __future__ import print_function
 
+import argparse
 import os.path
 import platform
 import subprocess
 import sys
+
+SEARCHES = [
+  'genetic-onepoint',
+  'genetic-twopoint',
+  'local-search',
+  'simulated-annealing',
+  'taboo-search',
+]
+
+# handling arguments
+
+parser = argparse.ArgumentParser()
+
+search_subparsers = parser.add_subparsers(
+  title = "algorithm",
+  description = "search algorithm to apply (no value for all algorithms)",
+  dest = "search_algorithm",
+  help = "run a specific search algorithm on all test data"
+)
+
+for s in SEARCHES:
+  p = search_subparsers.add_parser(
+    s
+  )
 
 if not os.path.exists(os.path.join(os.path.dirname(__file__), 'graph_color')):
   print('Cannot find folder with test data')
@@ -20,13 +45,12 @@ if not os.path.exists(file):
   print('Unable to find file with test data which should be run')
   sys.exit()
 
-searches = [
-  'local-search',
-  'simulated-annealing',
-  'taboo-search',
-  'genetic-onepoint',
-  'genetic-twopoint',
-]
+# parsing all arguments
+
+args = parser.parse_args()
+
+if args.search_algorithm:
+  SEARCHES = [args.search_algorithm]
 
 files = open(file, 'r').readlines()
 
@@ -35,7 +59,7 @@ for f in files:
   if not os.path.exists(file_name):
     print('Test file ' + file_name + ' not found.')
     continue
-  for s in searches:
+  for s in SEARCHES:
     print('Running ' + s + ' on ' + file_name)
     cmd_args = []
     if platform.system() != 'Windows':
