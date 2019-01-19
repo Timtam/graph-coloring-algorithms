@@ -26,6 +26,8 @@ namespace graph_coloring.algorithms
       double tmp_w;
       double p;
       
+      Console.WriteLine("start temperature set to " + this.GetStartTemperature());
+
       this.RunBefore();
 
       while(found && this.measurement.ElapsedMilliseconds < this.GetTimeout())
@@ -78,7 +80,27 @@ namespace graph_coloring.algorithms
 
     public void SetStartTemperature(int t)
     {
+      if(t <= 0)
+        throw new ArgumentException("start temperature may not be equal or less than 0");
       this.start_temperature = t;
+    }
+
+    public override void SetParameters(string[] param)
+    {
+
+      if(param.Length == 1)
+      {
+        try
+        {
+          this.SetStartTemperature(int.Parse(param[0]));
+        }
+        catch(FormatException)
+        {
+          throw new System.ArgumentException("start temperature must be numeric");
+        }
+      }
+      else if(param.Length > 1)
+        throw new ArgumentException("too many arguments for simulated annealing");
     }
   }
 }

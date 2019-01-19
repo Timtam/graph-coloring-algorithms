@@ -11,12 +11,13 @@ using graph_coloring.solutions;
 
 using System;
 using System.IO;
+using System.Linq;
 
 namespace graph_coloring
 {
   class Program
   {
-    static void Main(string[] args)
+    static int Main(string[] args)
     {
       Algorithm s;
       Solution ss;
@@ -26,7 +27,7 @@ namespace graph_coloring
       string file;
       if(args.Length == 0)
       {
-        Console.WriteLine("graph-coloring FILE ALGORITHM [TIMEOUT]");
+        Console.WriteLine("graph-coloring FILE ALGORITHM [TIMEOUT [OPTIONS]]");
         Console.WriteLine("Parameters:");
         Console.WriteLine("\tFILE - filename of a DIMACS graph file to process");
         Console.WriteLine("\t       specify a number for a random graph");
@@ -34,22 +35,26 @@ namespace graph_coloring
         Console.WriteLine("\tALGORITHM - algorithm to use during the search");
         Console.WriteLine("\tTIMEOUT - milliseconds after which the program will finish");
         Console.WriteLine("\t          processing some algorithms");
+        Console.WriteLine("\tOPTIONS - algorithm-specific options, like start ");
+        Console.WriteLine("\t          temperature for simulated annealing (see below)");
         Console.WriteLine("");
         Console.WriteLine("Currently supported algorithms:");
         Console.WriteLine("\tgenetic-onepoint");
         Console.WriteLine("\tgenetic-twopoint");
         Console.WriteLine("\tlocal-search");
         Console.WriteLine("\tsimulated-annealing");
+        Console.WriteLine("\t\tOptions:");
+        Console.WriteLine("\t\t\tstart temperature to use (default 30)");
         Console.WriteLine("\ttaboo-search");
-        return;
+        return 0;
       }
       else if(args.Length == 1)
       {
         Console.WriteLine("You must at least specify an algorithm to use");
-        return;
+        return 1;
       }
 
-      if(args.Length == 3)
+      if(args.Length >= 3)
       {
         try
         {
@@ -57,13 +62,13 @@ namespace graph_coloring
           if(timeout <= 0)
           {
             Console.WriteLine("You cannot disable timeouts.");
-            return;
+            return 1;
           }
         }
         catch (FormatException)
         {
           Console.WriteLine("timeout must be set with a numeric value.");
-          return;
+          return 1;
         }
       }
       file = args[0];
@@ -76,7 +81,7 @@ namespace graph_coloring
         if(!File.Exists(file))
         {
           Console.WriteLine("This file doesn't exist.");
-          return;
+          return 1;
         }
         graph = DIMACSParser.Read(file);
       }
@@ -105,7 +110,7 @@ namespace graph_coloring
           break;
         default:
           Console.WriteLine("no algorithm with name " + algorithm + " found");
-          return;
+          return 1;
       }
 
       Console.WriteLine("Running " + s.GetName() + " on graph");
@@ -117,6 +122,17 @@ namespace graph_coloring
         Console.WriteLine("No timeout applied.");
       else
         Console.WriteLine("Timeout set to " + timeout + " milliseconds.");
+
+      try
+      {
+        s.SetParameters(args.Skip(3).ToArray());
+      }
+      catch (ArgumentException ex)
+      {
+        Console.WriteLine("Error: " + ex.Message);
+        return 1;
+      }
+
       ss = s.Run();
       Console.WriteLine("Coloring through " + s.GetName() + " finished successfully.");
       Console.WriteLine("Finished with " + ss.ColorCount + " colors needed");
@@ -128,6 +144,7 @@ namespace graph_coloring
         Console.WriteLine("The algorithm result isn't a feasable solution and therefore");
         Console.WriteLine("still requires tweaking.");
       }
+      return 0;
     }
   }
 }

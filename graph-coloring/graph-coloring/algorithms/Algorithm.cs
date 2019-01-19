@@ -81,5 +81,9 @@ namespace graph_coloring.algorithms
     {
       return this.name;
     }
+
+    public virtual void SetParameters(string[] param)
+    {
+    }
   }
 }
