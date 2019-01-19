@@ -18,6 +18,7 @@ SEARCHES = [
 # handling arguments
 
 parser = argparse.ArgumentParser()
+parser.add_argument("-t", "--timeout", help = "timeout of algorithms in milliseconds (default 120000)", default = 120000, type = int)
 
 search_subparsers = parser.add_subparsers(
   title = "algorithm",
@@ -33,7 +34,7 @@ for s in SEARCHES:
 
   # handling algorithm-specific arguments
   if s == "simulated-annealing":
-    p.add_argument("-t", "--start-temperature", help = "start temperature to use for all simulated annealing runs (default 30)", default = 30)
+    p.add_argument("-t", "--start-temperature", help = "start temperature to use for all simulated annealing runs (default 30)", default = 30, type = int)
 
 if not os.path.exists(os.path.join(os.path.dirname(__file__), 'graph_color')):
   print('Cannot find folder with test data')
@@ -68,7 +69,7 @@ for f in files:
     cmd_args = []
     if platform.system() != 'Windows':
       cmd_args += ['mono', '--debug']
-    cmd_args += ['graph-coloring.exe', file_name, s, "120000"]
+    cmd_args += ['graph-coloring.exe', file_name, s, str(args.timeout)]
 
     # handling algorithm-specific parameters
     if s == "simulated-annealing":
