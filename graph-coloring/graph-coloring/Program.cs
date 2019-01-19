@@ -42,9 +42,11 @@ namespace graph_coloring
         Console.WriteLine("\tgenetic-onepoint");
         Console.WriteLine("\t\tOptions:");
         Console.WriteLine("\t\t\tamount of start solutions (default 100)");
+        Console.WriteLine("\t\t\tmutation probability (default 0.05)");
         Console.WriteLine("\tgenetic-twopoint");
         Console.WriteLine("\t\tOptions:");
         Console.WriteLine("\t\t\tamount of start solutions (default 100)");
+        Console.WriteLine("\t\t\tmutation probability (default 0.05)");
         Console.WriteLine("\tlocal-search");
         Console.WriteLine("\tsimulated-annealing");
         Console.WriteLine("\t\tOptions:");

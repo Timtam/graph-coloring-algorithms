@@ -40,6 +40,7 @@ for s in SEARCHES:
     p.add_argument("-l", "--taboo-list-length", help = "length of taboo list (default amount of nodes within graph", type=int, default=0)
   elif s.startswith("genetic"):
     p.add_argument("-s", "--amount-start-solutions", type=int, default = 100, help = "amount of start solutions used (default 100)")
+    p.add_argument("-p", "--mutation-probability", type=float, default=0.05, help = "probability to mutate randomly (default 0.05)")
 
 if not os.path.exists(os.path.join(os.path.dirname(__file__), 'graph_color')):
   print('Cannot find folder with test data')
@@ -82,7 +83,7 @@ for f in files:
     elif s == "taboo-search" and args.taboo_list_length != 0:
       cmd_args += [str(args.taboo_list_length)]
     elif s.startswith("genetic"):
-      cmd_args += [str(args.amount_start_solutions)]
+      cmd_args += [str(args.amount_start_solutions), str(args.mutation_probability)]
 
     proc = subprocess.Popen(cmd_args)
     try:

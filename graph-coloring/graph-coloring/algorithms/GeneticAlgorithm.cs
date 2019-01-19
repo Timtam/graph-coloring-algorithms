@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 using graph_coloring;
@@ -11,12 +12,14 @@ namespace graph_coloring.algorithms
   {
 
     private int amount_start_solutions;
-    private int CrossoverStrategy = 1; // 1 = onepoint, 2 = twopoint
+    private int crossover_strategy = 1; // 1 = onepoint, 2 = twopoint
+    private double mutation_probability;
 
     public GeneticAlgorithm(Graph g) : base(g)
     {
       this.SetTimeout(120000);
       this.SetAmountStartSolutions(100);
+      this.SetMutationProbability(0.05);
     }
 
     public override Solution Run()
@@ -48,6 +51,7 @@ namespace graph_coloring.algorithms
       w = s.GetWorth();
 
       Console.WriteLine("amount of start solutions set to " + this.GetAmountStartSolutions());
+      Console.WriteLine("probability of random mutations set to " + this.GetMutationProbability());
 
       this.RunBefore();
 
@@ -71,7 +75,7 @@ namespace graph_coloring.algorithms
         {
           for(j=i + 1; j < this.GetAmountStartSolutions() / 2; j++)
           {
-            if(this.CrossoverStrategy == 1)
+            if(this.GetCrossoverStrategy() == 1)
               t = GeneticSolution.OnePointCrossover(neighbors[i], neighbors[j]);
             else
               t = GeneticSolution.TwoPointCrossover(neighbors[i], neighbors[j]);
@@ -85,7 +89,7 @@ namespace graph_coloring.algorithms
 
         // loop over all solutions and mutate random genes
         for(i=0; i < this.GetAmountStartSolutions(); i++)
-          solutions[i].MutateRandomly();
+          solutions[i].MutateRandomly(this.GetMutationProbability());
 
         // we order the solutions to find the best
         solutions = solutions.OrderBy(o => o.GetWorth() / limit_w).ToList();
@@ -109,7 +113,7 @@ namespace graph_coloring.algorithms
 
     public override string GetName()
     {
-      switch(this.CrossoverStrategy)
+      switch(this.GetCrossoverStrategy())
       {
         case 1:
           return "genetic-onepoint";
@@ -125,7 +129,12 @@ namespace graph_coloring.algorithms
       if(s != 1 && s != 2)
         throw new ArgumentOutOfRangeException("only 1 or 2 for onepoint or twopoint crossover allowed");
 
-      this.CrossoverStrategy = s;
+      this.crossover_strategy = s;
+    }
+
+    public int GetCrossoverStrategy()
+    {
+      return this.crossover_strategy;
     }
 
     public void SetAmountStartSolutions(int a)
@@ -155,6 +164,30 @@ namespace graph_coloring.algorithms
           throw new ArgumentException("amount of start solutions must be numeric");
         }
       }
+
+      if(param.Length >= 2)
+      {
+        try
+        {
+          this.SetMutationProbability(Double.Parse(param[1], CultureInfo.InvariantCulture));
+        }
+        catch(FormatException)
+        {
+          throw new ArgumentException("mutation probability must be a floating-point number");
+        }
+      }
+    }
+
+    public void SetMutationProbability(double p)
+    {
+      if(p < 0 || p > 1.0)
+        throw new ArgumentException("mutation probability may not be less than 0 or greater than 1.0");
+      this.mutation_probability = p;
+    }
+
+    public double GetMutationProbability()
+    {
+      return this.mutation_probability;
     }
   }
 }

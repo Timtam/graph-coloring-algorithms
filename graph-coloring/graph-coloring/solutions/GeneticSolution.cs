@@ -62,7 +62,7 @@ namespace graph_coloring.solutions
       return new Tuple<GeneticSolution, GeneticSolution>(o1, o2);
     }
 
-    public void MutateRandomly()
+    public void MutateRandomly(double p)
     {
       double rd;
       int ri;
@@ -71,7 +71,7 @@ namespace graph_coloring.solutions
       for(i=0; i < this.colors.Length; i++)
       {
         rd = Randomizer.NextDouble();
-        if(rd < 0.05)
+        if(rd < p)
         {
           ri = Randomizer.Next(this.colors.Length) + 1;
           this.colors[i] = ri;
