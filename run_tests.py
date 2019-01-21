@@ -15,6 +15,14 @@ SEARCHES = [
   'taboo-search',
 ]
 
+PARAMETERS = {
+  "amount_start_solutions": 100,
+  "annealing_factor": 1.0,
+  "mutation_probability": 0.05,
+  "start_temperature": 30,
+  "taboo_list_length": 0,
+}
+
 EXECUTABLE_FOLDERS = [
   os.path.join(os.path.dirname(__file__), 'graph-coloring', 'graph-coloring', 'bin', 'Debug'),
   os.path.join(os.path.dirname(__file__), 'graph-coloring', 'graph-coloring', 'bin', 'Release'),
@@ -22,6 +30,13 @@ EXECUTABLE_FOLDERS = [
   os.path.dirname(__file__),
 ]
 
+# support functions
+
+def get_argument(a, s):
+  if hasattr(a, s):
+    return getattr(a, s)
+  return PARAMETERS[s]
+    
 # handling arguments
 
 parser = argparse.ArgumentParser()
@@ -41,13 +56,33 @@ for s in SEARCHES:
 
   # handling algorithm-specific arguments
   if s == "simulated-annealing":
-    p.add_argument("-t", "--start-temperature", help = "start temperature to use for all simulated annealing runs (default 30)", default = 30, type = int)
-    p.add_argument("-f", "--annealing-factor", help = "annealing factor used (default 1.0", type=float, default = 1.0)
+    p.add_argument("-t", "--start-temperature",
+      help = "start temperature to use for all simulated annealing runs (default {0})".format(PARAMETERS['start_temperature']),
+      default = PARAMETERS['start_temperature'],
+      type = int
+    )
+    p.add_argument("-f", "--annealing-factor",
+      help = "annealing factor used (default {0}".format(PARAMETERS["annealing_factor"]),
+      type=float,
+      default = PARAMETERS["annealing_factor"]
+    )
   elif s == "taboo-search":
-    p.add_argument("-l", "--taboo-list-length", help = "length of taboo list (default amount of nodes within graph", type=int, default=0)
+    p.add_argument("-l", "--taboo-list-length",
+      help = "length of taboo list (default amount of nodes within graph",
+      type=int,
+      default = PARAMETERS["taboo_list_length"]
+    )
   elif s.startswith("genetic"):
-    p.add_argument("-s", "--amount-start-solutions", type=int, default = 100, help = "amount of start solutions used (default 100)")
-    p.add_argument("-p", "--mutation-probability", type=float, default=0.05, help = "probability to mutate randomly (default 0.05)")
+    p.add_argument("-s", "--amount-start-solutions",
+      type=int,
+      default = PARAMETERS["amount_start_solutions"],
+      help = "amount of start solutions used (default {0})".format(PARAMETERS["amount_start_solutions"])
+    )
+    p.add_argument("-p", "--mutation-probability",
+      type=float,
+      default = PARAMETERS["mutation_probability"],
+      help = "probability to mutate randomly (default {0})".format(PARAMETERS["mutation_probability"])
+    )
 
 if not os.path.exists(os.path.join(os.path.dirname(__file__), 'graph_color')):
   print('Cannot find folder with test data')
@@ -92,11 +127,11 @@ for f in files:
 
     # handling algorithm-specific parameters
     if s == "simulated-annealing":
-      cmd_args += [str(args.start_temperature), str(args.annealing_factor)]
+      cmd_args += [str(get_argument(args, "start_temperature")), str(get_argument(args, "annealing_factor"))]
     elif s == "taboo-search" and args.taboo_list_length != 0:
-      cmd_args += [str(args.taboo_list_length)]
+      cmd_args += [str(get_argument(args, "taboo_list_length"))]
     elif s.startswith("genetic"):
-      cmd_args += [str(args.amount_start_solutions), str(args.mutation_probability)]
+      cmd_args += [str(get_argument(args, "amount_start_solutions")), str(get_argument(args, "mutation_probability"))]
 
     proc = subprocess.Popen(cmd_args)
     try:
