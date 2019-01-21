@@ -15,6 +15,13 @@ SEARCHES = [
   'taboo-search',
 ]
 
+EXECUTABLE_FOLDERS = [
+  os.path.join(os.path.dirname(__file__), 'graph-coloring', 'graph-coloring', 'bin', 'Debug'),
+  os.path.join(os.path.dirname(__file__), 'graph-coloring', 'graph-coloring', 'bin', 'Release'),
+  os.path.join(os.path.dirname(__file__), 'graph-coloring'),
+  os.path.dirname(__file__),
+]
+
 # handling arguments
 
 parser = argparse.ArgumentParser()
@@ -46,7 +53,9 @@ if not os.path.exists(os.path.join(os.path.dirname(__file__), 'graph_color')):
   print('Cannot find folder with test data')
   sys.exit()
 
-if not os.path.exists(os.path.join(os.path.dirname(__file__), 'graph-coloring.exe')):
+EXECUTABLE_FOLDERS = [f for f in EXECUTABLE_FOLDERS if os.path.exists(os.path.join(f, 'graph-coloring.exe'))]
+
+if len(EXECUTABLE_FOLDERS) == 0:
   print('Unable to find executable')
   sys.exit()
 
@@ -55,6 +64,10 @@ file = os.path.join(os.path.dirname(__file__), 'test_data.txt')
 if not os.path.exists(file):
   print('Unable to find file with test data which should be run')
   sys.exit()
+
+EXECUTABLE = os.path.join(EXECUTABLE_FOLDERS[0], 'graph-coloring.exe')
+
+print("Using {0} to run tests".format(EXECUTABLE))
 
 # parsing all arguments
 
@@ -75,7 +88,7 @@ for f in files:
     cmd_args = []
     if platform.system() != 'Windows':
       cmd_args += ['mono', '--debug']
-    cmd_args += ['graph-coloring.exe', file_name, s, str(args.timeout)]
+    cmd_args += [EXECUTABLE, file_name, s, str(args.timeout)]
 
     # handling algorithm-specific parameters
     if s == "simulated-annealing":
