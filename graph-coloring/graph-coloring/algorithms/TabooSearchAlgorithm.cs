@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 
 using graph_coloring;
-using graph_coloring.features;
 using graph_coloring.solutions;
 
 namespace graph_coloring.algorithms

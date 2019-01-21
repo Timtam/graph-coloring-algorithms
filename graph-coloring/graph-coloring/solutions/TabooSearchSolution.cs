@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using graph_coloring;
-using graph_coloring.features;
 
 namespace graph_coloring.solutions
 {

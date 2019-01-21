@@ -1,6 +1,4 @@
-﻿using graph_coloring;
-
-namespace graph_coloring.features
+﻿namespace graph_coloring
 {
   public struct Feature
   {
