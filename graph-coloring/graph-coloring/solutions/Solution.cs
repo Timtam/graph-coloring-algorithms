@@ -129,31 +129,7 @@ namespace graph_coloring.solutions
     // distinct the list, sort it and loop until we find a valid color
     private int GetPossibleColor(Node n)
     {
-      List<int> colors = new List<int>(n.NeighborCount);
-      int color = 1;
-      int i;
-      Node m;
-      List<Node> neighbors = this.graph.GetNeighbors(n);
-      
-      for(i=0; i<n.NeighborCount; i++)
-      {
-        m = neighbors[i];
-        if(this.colors[m.ID] > 0)
-          colors.Add(this.colors[m.ID]);
-      }
-
-      colors = colors.Distinct().ToList();
-
-      colors.Sort();
-
-      for(i=0; i<colors.Count; i++)
-      {
-        if(colors[i] != color)
-          break;
-        color++;
-      }
-
-      return color;
+      return this.GetPossibleColors(n)[0];
     }
 
     // retrieves the next bleached neighbor from all of n's neighbors
@@ -202,6 +178,14 @@ namespace graph_coloring.solutions
       for(i=0; i < this.graph.NodeCount; i++)
         if(this.colors[i] == 0)
           this.colors[i] = 1;
+    }
+
+    protected int[] GetPossibleColors(Node n)
+    {
+      List<Node> neighbors = this.graph.GetNeighbors(n);
+      List<int> colors = this.colors.Distinct().Except(neighbors.Select(m => this.colors[m.ID])).ToList();
+      colors.Add(this.GetUnusedColor());
+      return colors.OrderBy(c => c).ToArray();
     }
   }
 }
