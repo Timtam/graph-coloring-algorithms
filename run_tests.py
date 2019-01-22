@@ -8,6 +8,7 @@ import subprocess
 import sys
 
 SEARCHES = [
+  'branch-bound',
   'genetic-onepoint',
   'genetic-twopoint',
   'local-search',

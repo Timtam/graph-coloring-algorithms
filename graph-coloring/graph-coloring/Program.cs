@@ -39,6 +39,7 @@ namespace graph_coloring
         Console.WriteLine("\t          temperature for simulated annealing (see below)");
         Console.WriteLine("");
         Console.WriteLine("Currently supported algorithms:");
+        Console.WriteLine("\tbranch-bound");
         Console.WriteLine("\tgenetic-onepoint");
         Console.WriteLine("\t\tOptions:");
         Console.WriteLine("\t\t\tamount of start solutions (default 100)");
@@ -116,6 +117,9 @@ namespace graph_coloring
         case "genetic-twopoint":
           s = new GeneticAlgorithm(graph);
           ((GeneticAlgorithm)s).SetCrossoverStrategy(2);
+          break;
+        case "branch-bound":
+          s = new BranchBoundAlgorithm(graph);
           break;
         default:
           Console.WriteLine("no algorithm with name " + algorithm + " found");

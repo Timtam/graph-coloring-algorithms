@@ -77,7 +77,12 @@ namespace graph_coloring.solutions
 
     public bool IsValid()
     {
-      int[] invalid = this.GetInvalidEdges();
+      int[] invalid;
+
+      if(this.colors.Any(c => c == 0))
+        return false;
+
+      invalid = this.GetInvalidEdges();
 
       Array.Sort(invalid);
 
@@ -121,7 +126,11 @@ namespace graph_coloring.solutions
 
     public T Copy<T>()
     {
-      return (T)Activator.CreateInstance(typeof(T), this.graph, this.colors);
+      int[] c = new int[this.colors.Length];
+      
+      Array.Copy(this.colors, c, c.Length);
+
+      return (T)Activator.CreateInstance(typeof(T), this.graph, c);
     }
 
     // checks all neighbors of n and returns the best color to use
