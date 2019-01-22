@@ -28,6 +28,10 @@ namespace graph_coloring
 
     public void AddEdge(int from, int to)
     {
+
+      if(from == to) // we ignore circular edges
+        return;
+
       this.Edges.Add(new Edge(this.graph[from], this.graph[to]));
       this.graph[from].IncrementNeighborCount();
       this.graph[to].IncrementNeighborCount();

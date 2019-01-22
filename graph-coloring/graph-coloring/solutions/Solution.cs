@@ -90,7 +90,7 @@ namespace graph_coloring.solutions
       int[] colors;
       int clr = 1;
 
-      colors = this.colors.Distinct().ToArray();
+      colors = this.colors.Distinct().Where(c => c != 0).ToArray();
       
       Array.Sort(colors);
 
@@ -111,7 +111,9 @@ namespace graph_coloring.solutions
       Parallel.For(0, this.graph.EdgeCount, i =>
       {
         if(this.colors[this.graph.Edges[i].A.ID] == this.colors[this.graph.Edges[i].B.ID])
+        {
           Interlocked.Increment(ref edges[this.colors[this.graph.Edges[i].A.ID] - 1]);
+        }
       });
 
       return edges;
@@ -183,7 +185,7 @@ namespace graph_coloring.solutions
     protected int[] GetPossibleColors(Node n)
     {
       List<Node> neighbors = this.graph.GetNeighbors(n);
-      List<int> colors = this.colors.Distinct().Except(neighbors.Select(m => this.colors[m.ID])).ToList();
+      List<int> colors = this.colors.Distinct().Except(neighbors.Select(m => this.colors[m.ID])).Where(c => c > 0).ToList();
       colors.Add(this.GetUnusedColor());
       return colors.OrderBy(c => c).ToArray();
     }

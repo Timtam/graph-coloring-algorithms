@@ -25,9 +25,7 @@ namespace graph_coloring.solutions
       for(i=0; i < this.graph.NodeCount; i++)
       {
         n = this.graph.GetNode(i);
-        c = new List<int>(this.colors.Distinct());
-        c.Remove(this.colors[n.ID]);
-        c.Add(this.GetUnusedColor());
+        c = this.GetPossibleColors(n).ToList();
 
         processed.Add(i, c);
       }
