@@ -8,7 +8,7 @@ using graph_coloring.solutions;
 
 namespace graph_coloring.algorithms
 {
-  public class TabooSearchAlgorithm : LocalSearchAlgorithm
+  public class TabooSearchAlgorithm : Algorithm
   {
     private int taboo_list_length;
 

@@ -16,35 +16,20 @@ namespace graph_coloring.algorithms
   public class Algorithm
   {
     protected Graph graph;
-    protected List<int> colors;
     protected Stopwatch measurement;
     private string name;
     protected int timeout;
 
     public Algorithm(Graph g, string name = "unknown")
     {
-      int i;
-
       this.graph = g;
-      this.colors = new List<int>(graph.NodeCount);
       this.measurement = new Stopwatch();
       this.name = name;
       this.timeout = -1;
-
-      for(i=0; i<this.graph.NodeCount; i++)
-        this.colors.Add(0);
-    }
-
-    public void Bleach()
-    {
-      int i;
-      for(i=0; i < this.colors.Count; i++)
-        this.colors[i] = 0;
     }
 
     protected void RunBefore()
     {
-      this.Bleach();
       this.measurement.Reset();
       this.measurement.Start();
     }
@@ -84,6 +69,20 @@ namespace graph_coloring.algorithms
 
     public virtual void SetParameters(string[] param)
     {
+    }
+
+    protected T GetGreedySolution<T>() where T : IColorable
+    {
+      T s = (T)Activator.CreateInstance(typeof(T), this.graph, null);
+      s.ApplyGreedyColoring();
+      return s;
+    }
+
+    protected T GetSingleColoredSolution<T>() where T : IColorable
+    {
+      T s = (T)Activator.CreateInstance(typeof(T), this.graph, null);
+      s.ApplySingleColoring();
+      return s;
     }
   }
 }

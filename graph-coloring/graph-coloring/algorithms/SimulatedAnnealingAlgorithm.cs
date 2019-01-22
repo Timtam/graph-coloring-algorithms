@@ -7,7 +7,7 @@ using graph_coloring.solutions;
 
 namespace graph_coloring.algorithms
 {
-  public class SimulatedAnnealingAlgorithm : LocalSearchAlgorithm
+  public class SimulatedAnnealingAlgorithm : Algorithm
   {
     private int start_temperature;
     private double annealing_factor;
