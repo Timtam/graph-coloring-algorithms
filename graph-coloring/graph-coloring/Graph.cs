@@ -32,6 +32,10 @@ namespace graph_coloring
       if(from == to) // we ignore circular edges
         return;
 
+      // we won't add edges twice
+      if(this.Edges.Any(e => (e.A.ID == from && e.B.ID == to) || (e.A.ID == to && e.B.ID == from)) == true)
+        return;
+
       this.Edges.Add(new Edge(this.graph[from], this.graph[to]));
       this.graph[from].IncrementNeighborCount();
       this.graph[to].IncrementNeighborCount();
