@@ -63,7 +63,7 @@ for s in SEARCHES:
       type = int
     )
     p.add_argument("-f", "--annealing-factor",
-      help = "annealing factor used (default {0}".format(PARAMETERS["annealing_factor"]),
+      help = "annealing factor used (default {0})".format(PARAMETERS["annealing_factor"]),
       type=float,
       default = PARAMETERS["annealing_factor"]
     )
@@ -85,6 +85,10 @@ for s in SEARCHES:
       help = "probability to mutate randomly (default {0})".format(PARAMETERS["mutation_probability"])
     )
 
+# parsing all arguments
+
+args = parser.parse_args()
+
 if not os.path.exists(os.path.join(os.path.dirname(__file__), 'graph_color')):
   print('Cannot find folder with test data')
   sys.exit()
@@ -104,10 +108,6 @@ if not os.path.exists(file):
 EXECUTABLE = os.path.join(EXECUTABLE_FOLDERS[0], 'graph-coloring.exe')
 
 print("Using {0} to run tests".format(EXECUTABLE))
-
-# parsing all arguments
-
-args = parser.parse_args()
 
 if args.search_algorithm:
   SEARCHES = [args.search_algorithm]
