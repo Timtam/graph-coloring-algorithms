@@ -6,6 +6,7 @@
 // may also raise exceptions if an error occurred
 
 using System.IO;
+using System.Linq;
 
 namespace graph_coloring
 {
@@ -28,7 +29,8 @@ namespace graph_coloring
           continue;
         else if(line.StartsWith("p"))
         {
-          parts = line.Split(' ');
+          parts = line.Split(null);
+          parts = parts.Where(p => !string.IsNullOrWhiteSpace(p)).ToArray();
           if(parts.Length != 4)
             throw new System.ArgumentException("problem line doesn't have the required format");
           if(!parts[1].Contains("edge"))
@@ -39,7 +41,8 @@ namespace graph_coloring
         {
           if(g == null)
             throw new System.InvalidOperationException("cannot add edges to not properly initialized graphs");
-          parts = line.Split(' ');
+          parts = line.Split(null);
+          parts = parts.Where(p => !string.IsNullOrWhiteSpace(p)).ToArray();
           if(parts.Length != 3)
             throw new System.ArgumentException("wrong number of arguments to edge specification");
           g.AddEdge(int.Parse(parts[1]) - 1, int.Parse(parts[2]) - 1);
