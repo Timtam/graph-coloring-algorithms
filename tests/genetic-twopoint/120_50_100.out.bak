@@ -1,0 +1,27 @@
+Graph with 282 nodes and 3247 edges loaded successfully.
+Running genetic-twopoint on graph
+Timeout set to 120000 milliseconds.
+amount of start solutions set to 50
+probability of random mutations set to 0,1
+Coloring through genetic-twopoint finished successfully.
+Finished with 153 colors needed
+Algorithm took 00:02:00.0566545 to run.
+The algorithm result isn't a feasable solution and therefore
+still requires tweaking.
+Graph with 149 nodes and 541 edges loaded successfully.
+Running genetic-twopoint on graph
+Timeout set to 120000 milliseconds.
+amount of start solutions set to 50
+probability of random mutations set to 0,1
+Coloring through genetic-twopoint finished successfully.
+Finished with 69 colors needed
+Algorithm took 00:02:00.0888660 to run.
+The algorithm result isn't a feasable solution and therefore
+still requires tweaking.
+* Assertion at sgen-os-posix.c:75, condition `!info->client_info.stack_start' not met
+
+Using graph-coloring/graph-coloring/bin/Debug/graph-coloring.exe to run tests
+Running genetic-twopoint on graph_color/1-FullIns_5.col
+----------------------------------------
+Running genetic-twopoint on graph_color/2-Insertions_4.col
+An error occurred during test, cancelling follow-ups

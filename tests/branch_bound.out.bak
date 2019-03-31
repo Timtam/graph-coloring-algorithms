@@ -1,0 +1,17 @@
+Graph with 282 nodes and 3247 edges loaded successfully.
+Running branch-bound on graph
+No timeout applied.
+Coloring through branch-bound finished successfully.
+Finished with 8 colors needed
+Algorithm took 00:00:04.5560440 to run.
+Algorithm result is a feasable solution.
+Graph with 149 nodes and 541 edges loaded successfully.
+Running branch-bound on graph
+No timeout applied.
+Coloring through branch-bound finished successfully.
+Finished with 5 colors needed
+Algorithm took 00:00:00.7130085 to run.
+Algorithm result is a feasable solution.
+Graph with 2030 nodes and 33751 edges loaded successfully.
+Running branch-bound on graph
+No timeout applied.

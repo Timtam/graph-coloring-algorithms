@@ -1,0 +1,75 @@
+Graph with 282 nodes and 3247 edges loaded successfully.
+Running genetic-onepoint on graph
+Timeout set to 600000 milliseconds.
+amount of start solutions set to 100
+probability of random mutations set to 0,1
+Coloring through genetic-onepoint finished successfully.
+Finished with 142 colors needed
+Algorithm took 00:10:00.1812449 to run.
+The algorithm result isn't a feasable solution and therefore
+still requires tweaking.
+Graph with 149 nodes and 541 edges loaded successfully.
+Running genetic-onepoint on graph
+Timeout set to 600000 milliseconds.
+amount of start solutions set to 100
+probability of random mutations set to 0,1
+Coloring through genetic-onepoint finished successfully.
+Finished with 72 colors needed
+Algorithm took 00:10:00.1266381 to run.
+The algorithm result isn't a feasable solution and therefore
+still requires tweaking.
+Graph with 2030 nodes and 33751 edges loaded successfully.
+Running genetic-onepoint on graph
+Timeout set to 600000 milliseconds.
+amount of start solutions set to 100
+probability of random mutations set to 0,1
+Coloring through genetic-onepoint finished successfully.
+Finished with 1256 colors needed
+Algorithm took 00:10:02.1563872 to run.
+The algorithm result isn't a feasable solution and therefore
+still requires tweaking.
+Graph with 475 nodes and 1795 edges loaded successfully.
+Running genetic-onepoint on graph
+Timeout set to 600000 milliseconds.
+amount of start solutions set to 100
+probability of random mutations set to 0,1
+Coloring through genetic-onepoint finished successfully.
+Finished with 278 colors needed
+Algorithm took 00:10:00.0634360 to run.
+The algorithm result isn't a feasable solution and therefore
+still requires tweaking.
+Graph with 1085 nodes and 11395 edges loaded successfully.
+Running genetic-onepoint on graph
+Timeout set to 600000 milliseconds.
+amount of start solutions set to 100
+probability of random mutations set to 0,1
+Coloring through genetic-onepoint finished successfully.
+Finished with 651 colors needed
+Algorithm took 00:10:01.2612149 to run.
+The algorithm result isn't a feasable solution and therefore
+still requires tweaking.
+Graph with 125 nodes and 3891 edges loaded successfully.
+Running genetic-onepoint on graph
+Timeout set to 600000 milliseconds.
+amount of start solutions set to 100
+probability of random mutations set to 0,1
+Coloring through genetic-onepoint finished successfully.
+Finished with 68 colors needed
+Algorithm took 00:10:00.6897217 to run.
+The algorithm result isn't a feasable solution and therefore
+still requires tweaking.
+* Assertion at sgen-os-posix.c:75, condition `!info->client_info.stack_start' not met
+
+Using graph-coloring/graph-coloring/bin/Debug/graph-coloring.exe to run tests
+Running genetic-onepoint on graph_color/1-FullIns_5.col
+----------------------------------------
+Running genetic-onepoint on graph_color/2-Insertions_4.col
+----------------------------------------
+Running genetic-onepoint on graph_color/3-FullIns_5.col
+----------------------------------------
+Running genetic-onepoint on graph_color/4-Insertions_4.col
+----------------------------------------
+Running genetic-onepoint on graph_color/5-FullIns_4.col
+----------------------------------------
+Running genetic-onepoint on graph_color/DSJC125.5.col
+An error occurred during test, cancelling follow-ups

@@ -1,0 +1,175 @@
+
+Native stacktrace:
+
+	mono(+0xc8514) [0x55d05bef8514]
+	/lib/x86_64-linux-gnu/libpthread.so.0(+0x12890) [0x7f2f3ee91890]
+	/lib/x86_64-linux-gnu/libc.so.6(gsignal+0xc7) [0x7f2f3e8b4e97]
+	/lib/x86_64-linux-gnu/libc.so.6(abort+0x141) [0x7f2f3e8b6801]
+	mono(+0x289769) [0x55d05c0b9769]
+	mono(+0x2899fc) [0x55d05c0b99fc]
+	mono(+0x289b93) [0x55d05c0b9b93]
+	mono(+0x213abe) [0x55d05c043abe]
+	mono(+0x213aff) [0x55d05c043aff]
+	/lib/x86_64-linux-gnu/libpthread.so.0(+0x12890) [0x7f2f3ee91890]
+	mono(+0x27ebc2) [0x55d05c0aebc2]
+	mono(mono_thread_info_detach+0x2c) [0x55d05c0afcac]
+	mono(+0x28206b) [0x55d05c0b206b]
+	mono(+0x282156) [0x55d05c0b2156]
+	/lib/x86_64-linux-gnu/libpthread.so.0(+0x76db) [0x7f2f3ee866db]
+	/lib/x86_64-linux-gnu/libc.so.6(clone+0x3f) [0x7f2f3e99788f]
+
+Debug info from gdb:
+
+[New LWP 15169]
+[New LWP 15170]
+[New LWP 15174]
+[New LWP 15175]
+[New LWP 15176]
+[New LWP 15177]
+[New LWP 15180]
+[New LWP 15182]
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+0x00007f2f3ee8f6d6 in futex_abstimed_wait_cancelable (private=0, abstime=0x0, expected=0, futex_word=0x55d05c3dcd00) at ../sysdeps/unix/sysv/linux/futex-internal.h:205
+205	../sysdeps/unix/sysv/linux/futex-internal.h: Datei oder Verzeichnis nicht gefunden.
+  Id   Target Id         Frame 
+* 1    Thread 0x7f2f3fa3b780 (LWP 15168) "Main" 0x00007f2f3ee8f6d6 in futex_abstimed_wait_cancelable (private=0, abstime=0x0, expected=0, futex_word=0x55d05c3dcd00) at ../sysdeps/unix/sysv/linux/futex-internal.h:205
+  2    Thread 0x7f2f3dfff700 (LWP 15169) "SGen worker" 0x00007f2f3ee8c9f3 in futex_wait_cancelable (private=<optimized out>, expected=0, futex_word=0x55d05c3eba08) at ../sysdeps/unix/sysv/linux/futex-internal.h:88
+  3    Thread 0x7f2f3bc34700 (LWP 15170) "Finalizer" 0x00007f2f3e8b5236 in __GI___sigsuspend (set=0x55d05c3dcc60) at ../sysdeps/unix/sysv/linux/sigsuspend.c:26
+  4    Thread 0x7f2f3b1fd700 (LWP 15174) "Threadpool work" 0x00007f2f3e8b5236 in __GI___sigsuspend (set=0x55d05c3dcc60) at ../sysdeps/unix/sysv/linux/sigsuspend.c:26
+  5    Thread 0x7f2f3affc700 (LWP 15175) "Threadpool work" 0x00007f2f3e8b5236 in __GI___sigsuspend (set=0x55d05c3dcc60) at ../sysdeps/unix/sysv/linux/sigsuspend.c:26
+  6    Thread 0x7f2f3adfb700 (LWP 15176) "Threadpool work" 0x00007f2f3e8b5236 in __GI___sigsuspend (set=0x55d05c3dcc60) at ../sysdeps/unix/sysv/linux/sigsuspend.c:26
+  7    Thread 0x7f2f3abfa700 (LWP 15177) "Threadpool work" 0x00007f2f3e8b5236 in __GI___sigsuspend (set=0x55d05c3dcc60) at ../sysdeps/unix/sysv/linux/sigsuspend.c:26
+  8    Thread 0x7f2f3a5f7700 (LWP 15180) "Threadpool work" 0x00007f2f3ee9123a in __waitpid (pid=15270, stat_loc=0x7f2f3a5f582c, options=0) at ../sysdeps/unix/sysv/linux/waitpid.c:30
+  9    Thread 0x7f2f39f63700 (LWP 15182) "Threadpool work" 0x00007f2f3e8b5236 in __GI___sigsuspend (set=0x55d05c3dcc60) at ../sysdeps/unix/sysv/linux/sigsuspend.c:26
+
+Thread 9 (Thread 0x7f2f39f63700 (LWP 15182)):
+#0  0x00007f2f3e8b5236 in __GI___sigsuspend (set=0x55d05c3dcc60) at ../sysdeps/unix/sysv/linux/sigsuspend.c:26
+#1  0x000055d05c043942 in ?? ()
+#2  0x000055d05c043aff in ?? ()
+#3  <signal handler called>
+#4  0x00007f2f3e991ae7 in mprotect () at ../sysdeps/unix/syscall-template.S:78
+#5  0x000055d05bef81c9 in ?? ()
+#6  0x000055d05be68f71 in ?? ()
+#7  0x000055d05bff2081 in ?? ()
+#8  0x000055d05bff2be9 in ?? ()
+#9  0x000055d05c0b214a in ?? ()
+#10 0x00007f2f3ee866db in start_thread (arg=0x7f2f39f63700) at pthread_create.c:463
+#11 0x00007f2f3e99788f in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:95
+
+Thread 8 (Thread 0x7f2f3a5f7700 (LWP 15180)):
+#0  0x00007f2f3ee9123a in __waitpid (pid=15270, stat_loc=0x7f2f3a5f582c, options=0) at ../sysdeps/unix/sysv/linux/waitpid.c:30
+#1  0x000055d05bef85f0 in ?? ()
+#2  <signal handler called>
+#3  __GI_raise (sig=sig@entry=6) at ../sysdeps/unix/sysv/linux/raise.c:51
+#4  0x00007f2f3e8b6801 in __GI_abort () at abort.c:79
+#5  0x000055d05c0b9769 in ?? ()
+#6  0x000055d05c0b99fc in ?? ()
+#7  0x000055d05c0b9b93 in ?? ()
+#8  0x000055d05c043abe in ?? ()
+#9  0x000055d05c043aff in ?? ()
+#10 <signal handler called>
+#11 0x000055d05c0aebc2 in ?? ()
+#12 0x000055d05c0afcac in mono_thread_info_detach ()
+#13 0x000055d05c0b206b in ?? ()
+#14 0x000055d05c0b2156 in ?? ()
+#15 0x00007f2f3ee866db in start_thread (arg=0x7f2f3a5f7700) at pthread_create.c:463
+#16 0x00007f2f3e99788f in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:95
+
+Thread 7 (Thread 0x7f2f3abfa700 (LWP 15177)):
+#0  0x00007f2f3e8b5236 in __GI___sigsuspend (set=0x55d05c3dcc60) at ../sysdeps/unix/sysv/linux/sigsuspend.c:26
+#1  0x000055d05c043942 in ?? ()
+#2  0x000055d05c043aff in ?? ()
+#3  <signal handler called>
+#4  0x00007f2f3e991ae7 in mprotect () at ../sysdeps/unix/syscall-template.S:78
+#5  0x000055d05bef81c9 in ?? ()
+#6  0x000055d05be68f71 in ?? ()
+#7  0x000055d05bff2081 in ?? ()
+#8  0x000055d05bff2be9 in ?? ()
+#9  0x000055d05c0b214a in ?? ()
+#10 0x00007f2f3ee866db in start_thread (arg=0x7f2f3abfa700) at pthread_create.c:463
+#11 0x00007f2f3e99788f in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:95
+
+Thread 6 (Thread 0x7f2f3adfb700 (LWP 15176)):
+#0  0x00007f2f3e8b5236 in __GI___sigsuspend (set=0x55d05c3dcc60) at ../sysdeps/unix/sysv/linux/sigsuspend.c:26
+#1  0x000055d05c043942 in ?? ()
+#2  0x000055d05c043aff in ?? ()
+#3  <signal handler called>
+#4  0x00007f2f3e991ae7 in mprotect () at ../sysdeps/unix/syscall-template.S:78
+#5  0x000055d05bef81c9 in ?? ()
+#6  0x000055d05be68f71 in ?? ()
+#7  0x000055d05bff2081 in ?? ()
+#8  0x000055d05bff2be9 in ?? ()
+#9  0x000055d05c0b214a in ?? ()
+#10 0x00007f2f3ee866db in start_thread (arg=0x7f2f3adfb700) at pthread_create.c:463
+#11 0x00007f2f3e99788f in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:95
+
+Thread 5 (Thread 0x7f2f3affc700 (LWP 15175)):
+#0  0x00007f2f3e8b5236 in __GI___sigsuspend (set=0x55d05c3dcc60) at ../sysdeps/unix/sysv/linux/sigsuspend.c:26
+#1  0x000055d05c043942 in ?? ()
+#2  0x000055d05c043aff in ?? ()
+#3  <signal handler called>
+#4  pthread_self () at pthread_self.c:26
+#5  0x000055d05c09f091 in ?? ()
+#6  0x000055d05c0b2066 in ?? ()
+#7  0x000055d05c0b2156 in ?? ()
+#8  0x00007f2f3ee866db in start_thread (arg=0x7f2f3affc700) at pthread_create.c:463
+#9  0x00007f2f3e99788f in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:95
+
+Thread 4 (Thread 0x7f2f3b1fd700 (LWP 15174)):
+#0  0x00007f2f3e8b5236 in __GI___sigsuspend (set=0x55d05c3dcc60) at ../sysdeps/unix/sysv/linux/sigsuspend.c:26
+#1  0x000055d05c043942 in ?? ()
+#2  0x000055d05c043aff in ?? ()
+#3  <signal handler called>
+#4  0x00007f2f3e991ae7 in mprotect () at ../sysdeps/unix/syscall-template.S:78
+#5  0x000055d05bef81c9 in ?? ()
+#6  0x000055d05be68f71 in ?? ()
+#7  0x000055d05bff2081 in ?? ()
+#8  0x000055d05bff2be9 in ?? ()
+#9  0x000055d05c0b214a in ?? ()
+#10 0x00007f2f3ee866db in start_thread (arg=0x7f2f3b1fd700) at pthread_create.c:463
+#11 0x00007f2f3e99788f in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:95
+
+Thread 3 (Thread 0x7f2f3bc34700 (LWP 15170)):
+#0  0x00007f2f3e8b5236 in __GI___sigsuspend (set=0x55d05c3dcc60) at ../sysdeps/unix/sysv/linux/sigsuspend.c:26
+#1  0x000055d05c043942 in ?? ()
+#2  0x000055d05c043aff in ?? ()
+#3  <signal handler called>
+#4  0x00007f2f3ee87d2b in __GI___pthread_timedjoin_ex (threadid=139840821626624, thread_return=0x0, abstime=0x0, block=<optimized out>) at pthread_join_common.c:89
+#5  0x000055d05bff4f2d in ?? ()
+#6  0x000055d05c014cad in ?? ()
+#7  0x000055d05bff2be1 in ?? ()
+#8  0x000055d05c0b214a in ?? ()
+#9  0x00007f2f3ee866db in start_thread (arg=0x7f2f3bc34700) at pthread_create.c:463
+#10 0x00007f2f3e99788f in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:95
+
+Thread 2 (Thread 0x7f2f3dfff700 (LWP 15169)):
+#0  0x00007f2f3ee8c9f3 in futex_wait_cancelable (private=<optimized out>, expected=0, futex_word=0x55d05c3eba08) at ../sysdeps/unix/sysv/linux/futex-internal.h:88
+#1  __pthread_cond_wait_common (abstime=0x0, mutex=0x55d05c3eba20, cond=0x55d05c3eb9e0) at pthread_cond_wait.c:502
+#2  __pthread_cond_wait (cond=0x55d05c3eb9e0, mutex=0x55d05c3eba20) at pthread_cond_wait.c:655
+#3  0x000055d05c080863 in ?? ()
+#4  0x00007f2f3ee866db in start_thread (arg=0x7f2f3dfff700) at pthread_create.c:463
+#5  0x00007f2f3e99788f in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:95
+
+Thread 1 (Thread 0x7f2f3fa3b780 (LWP 15168)):
+#0  0x00007f2f3ee8f6d6 in futex_abstimed_wait_cancelable (private=0, abstime=0x0, expected=0, futex_word=0x55d05c3dcd00) at ../sysdeps/unix/sysv/linux/futex-internal.h:205
+#1  do_futex_wait (sem=sem@entry=0x55d05c3dcd00, abstime=0x0) at sem_waitcommon.c:111
+#2  0x00007f2f3ee8f7c8 in __new_sem_wait_slow (sem=0x55d05c3dcd00, abstime=0x0) at sem_waitcommon.c:181
+#3  0x000055d05c043b88 in ?? ()
+#4  0x000055d05c044587 in ?? ()
+#5  0x000055d05c06625a in ?? ()
+#6  0x000055d05c066687 in ?? ()
+#7  0x000055d05c0669dd in ?? ()
+#8  0x000055d05c01536c in mono_domain_finalize ()
+#9  0x000055d05be6a5a4 in ?? ()
+#10 0x000055d05bec981c in mono_main ()
+#11 0x000055d05be68236 in ?? ()
+#12 0x00007f2f3e897b97 in __libc_start_main (main=0x55d05be68130, argc=8, argv=0x7ffd2230d408, init=<optimized out>, fini=<optimized out>, rtld_fini=<optimized out>, stack_end=0x7ffd2230d3f8) at ../csu/libc-start.c:310
+#13 0x000055d05be6860a in _start ()
+
+=================================================================
+Got a SIGABRT while executing native code. This usually indicates
+a fatal error in the mono runtime or one of the native libraries 
+used by your application.
+=================================================================
+

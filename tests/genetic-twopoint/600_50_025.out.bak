@@ -1,0 +1,121 @@
+Graph with 282 nodes and 3247 edges loaded successfully.
+Running genetic-twopoint on graph
+Timeout set to 600000 milliseconds.
+amount of start solutions set to 50
+probability of random mutations set to 0,025
+Coloring through genetic-twopoint finished successfully.
+Finished with 100 colors needed
+Algorithm took 00:10:00.0168703 to run.
+The algorithm result isn't a feasable solution and therefore
+still requires tweaking.
+Graph with 149 nodes and 541 edges loaded successfully.
+Running genetic-twopoint on graph
+Timeout set to 600000 milliseconds.
+amount of start solutions set to 50
+probability of random mutations set to 0,025
+Coloring through genetic-twopoint finished successfully.
+Finished with 13 colors needed
+Algorithm took 00:10:00.0964092 to run.
+Algorithm result is a feasable solution.
+Graph with 2030 nodes and 33751 edges loaded successfully.
+Running genetic-twopoint on graph
+Timeout set to 600000 milliseconds.
+amount of start solutions set to 50
+probability of random mutations set to 0,025
+Coloring through genetic-twopoint finished successfully.
+Finished with 1182 colors needed
+Algorithm took 00:10:00.0796923 to run.
+The algorithm result isn't a feasable solution and therefore
+still requires tweaking.
+Graph with 475 nodes and 1795 edges loaded successfully.
+Running genetic-twopoint on graph
+Timeout set to 600000 milliseconds.
+amount of start solutions set to 50
+probability of random mutations set to 0,025
+Coloring through genetic-twopoint finished successfully.
+Finished with 200 colors needed
+Algorithm took 00:10:00.0652284 to run.
+The algorithm result isn't a feasable solution and therefore
+still requires tweaking.
+Graph with 1085 nodes and 11395 edges loaded successfully.
+Running genetic-twopoint on graph
+Timeout set to 600000 milliseconds.
+amount of start solutions set to 50
+probability of random mutations set to 0,025
+Coloring through genetic-twopoint finished successfully.
+Finished with 620 colors needed
+Algorithm took 00:10:00.1033879 to run.
+The algorithm result isn't a feasable solution and therefore
+still requires tweaking.
+Graph with 125 nodes and 3891 edges loaded successfully.
+Running genetic-twopoint on graph
+Timeout set to 600000 milliseconds.
+amount of start solutions set to 50
+probability of random mutations set to 0,025
+Coloring through genetic-twopoint finished successfully.
+Finished with 30 colors needed
+Algorithm took 00:10:00.1016358 to run.
+The algorithm result isn't a feasable solution and therefore
+still requires tweaking.
+Graph with 250 nodes and 15668 edges loaded successfully.
+Running genetic-twopoint on graph
+Timeout set to 600000 milliseconds.
+amount of start solutions set to 50
+probability of random mutations set to 0,025
+Coloring through genetic-twopoint finished successfully.
+Finished with 94 colors needed
+Algorithm took 00:10:00.1034516 to run.
+The algorithm result isn't a feasable solution and therefore
+still requires tweaking.
+Graph with 500 nodes and 12458 edges loaded successfully.
+Running genetic-twopoint on graph
+Timeout set to 600000 milliseconds.
+amount of start solutions set to 50
+probability of random mutations set to 0,025
+Coloring through genetic-twopoint finished successfully.
+Finished with 229 colors needed
+Algorithm took 00:10:00.1222306 to run.
+The algorithm result isn't a feasable solution and therefore
+still requires tweaking.
+Graph with 451 nodes and 8691 edges loaded successfully.
+Running genetic-twopoint on graph
+Timeout set to 600000 milliseconds.
+amount of start solutions set to 50
+probability of random mutations set to 0,025
+Coloring through genetic-twopoint finished successfully.
+Finished with 194 colors needed
+Algorithm took 00:10:00.2319298 to run.
+The algorithm result isn't a feasable solution and therefore
+still requires tweaking.
+Graph with 561 nodes and 1628 edges loaded successfully.
+Running genetic-twopoint on graph
+Timeout set to 600000 milliseconds.
+amount of start solutions set to 50
+probability of random mutations set to 0,025
+Coloring through genetic-twopoint finished successfully.
+Finished with 246 colors needed
+Algorithm took 00:10:00.1514139 to run.
+Algorithm result is a feasable solution.
+* Assertion at sgen-os-posix.c:75, condition `!info->client_info.stack_start' not met
+
+Using graph-coloring/graph-coloring/bin/Debug/graph-coloring.exe to run tests
+Running genetic-twopoint on graph_color/1-FullIns_5.col
+----------------------------------------
+Running genetic-twopoint on graph_color/2-Insertions_4.col
+----------------------------------------
+Running genetic-twopoint on graph_color/3-FullIns_5.col
+----------------------------------------
+Running genetic-twopoint on graph_color/4-Insertions_4.col
+----------------------------------------
+Running genetic-twopoint on graph_color/5-FullIns_4.col
+----------------------------------------
+Running genetic-twopoint on graph_color/DSJC125.5.col
+----------------------------------------
+Running genetic-twopoint on graph_color/DSJC250.5.col
+----------------------------------------
+Running genetic-twopoint on graph_color/DSJC500.1.col
+----------------------------------------
+Running genetic-twopoint on graph_color/fpsol2.i.2.col
+----------------------------------------
+Running genetic-twopoint on graph_color/homer.col
+An error occurred during test, cancelling follow-ups
