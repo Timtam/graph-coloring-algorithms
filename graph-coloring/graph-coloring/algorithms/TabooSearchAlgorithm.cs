@@ -79,7 +79,7 @@ namespace graph_coloring.algorithms
           useless_steps = 0;
           global_s = s;
           global_w = w;
-          while(taboo.Count < 0)
+          while(taboo.Count > 0)
             taboo.TryDequeue(out drop);
         }
       }
